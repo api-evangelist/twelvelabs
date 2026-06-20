@@ -1,0 +1,86 @@
+aid: twelvelabs
+name: TwelveLabs
+review:
+  question: Does TwelveLabs expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: true
+  asyncapiScopeNote: |
+    Per updated API Evangelist scope, HTTP streaming responses are in-scope for
+    AsyncAPI modeling. An AsyncAPI 2.6 document was created at
+    asyncapi/twelvelabs-asyncapi.yml describing the analyze (text generation)
+    stream (POST /analyze with stream=true). TwelveLabs streams that response
+    as newline-delimited JSON (NDJSON), not Server-Sent Events and not
+    WebSocket. No WebSocket surface was modeled because none is documented.
+findings:
+  summary: |
+    TwelveLabs does not publish a documented public WebSocket API. The
+    platform is organized around REST and returns JSON over HTTPS under
+    https://api.twelvelabs.io/v1.3, authenticated with an `x-api-key` header.
+    The only streaming surface is the analyze (text generation) endpoint
+    (POST /analyze), which streams results as newline-delimited JSON (NDJSON)
+    when `stream: true` (the default). NDJSON is a one-way HTTP streaming
+    transport and is neither Server-Sent Events nor WebSocket. Long-running
+    indexing and embedding work is handled with asynchronous tasks that are
+    created over REST and polled for status; no realtime bidirectional or
+    audio-streaming WebSocket (ws:// or wss://) endpoint is documented.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.twelvelabs.io/v1.3
+      documented: true
+    - protocol: NDJSON
+      scheme: https
+      note: Newline-delimited JSON streamed over the POST /analyze REST endpoint when stream=true. Not WebSocket and not SSE.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in the TwelveLabs API reference for search, indexing, analyze, or embed as of the review date.
+  endpointsConfirmedRest:
+    - GET    https://api.twelvelabs.io/v1.3/indexes
+    - POST   https://api.twelvelabs.io/v1.3/indexes
+    - GET    https://api.twelvelabs.io/v1.3/indexes/{index_id}
+    - PUT    https://api.twelvelabs.io/v1.3/indexes/{index_id}
+    - DELETE https://api.twelvelabs.io/v1.3/indexes/{index_id}
+    - GET    https://api.twelvelabs.io/v1.3/indexes/{index_id}/videos
+    - GET    https://api.twelvelabs.io/v1.3/indexes/{index_id}/videos/{video_id}
+    - PUT    https://api.twelvelabs.io/v1.3/indexes/{index_id}/videos/{video_id}
+    - DELETE https://api.twelvelabs.io/v1.3/indexes/{index_id}/videos/{video_id}
+    - GET    https://api.twelvelabs.io/v1.3/tasks
+    - POST   https://api.twelvelabs.io/v1.3/tasks
+    - GET    https://api.twelvelabs.io/v1.3/tasks/{task_id}
+    - DELETE https://api.twelvelabs.io/v1.3/tasks/{task_id}
+    - POST   https://api.twelvelabs.io/v1.3/search
+    - GET    https://api.twelvelabs.io/v1.3/search/{page_token}
+    - POST   https://api.twelvelabs.io/v1.3/analyze
+    - POST   https://api.twelvelabs.io/v1.3/gist
+    - POST   https://api.twelvelabs.io/v1.3/summarize
+    - POST   https://api.twelvelabs.io/v1.3/embed
+    - POST   https://api.twelvelabs.io/v1.3/embed/tasks
+    - GET    https://api.twelvelabs.io/v1.3/embed/tasks
+    - GET    https://api.twelvelabs.io/v1.3/embed/tasks/{task_id}
+sources:
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/introduction
+    type: APIReference
+    note: Overview lists REST base URL https://api.twelvelabs.io and x-api-key header auth; no WebSocket mentioned.
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/analyze-videos/analyze
+    type: APIReference
+    note: Analyze streams results as NDJSON (event_type stream_start/text_generation/stream_end) when stream=true; not WebSocket, not SSE.
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/any-to-video-search/make-search-request
+    type: APIReference
+    note: Search is a single POST returning paginated JSON; subsequent pages retrieved via GET with a page token. No WebSocket.
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/upload-content/tasks/create
+    type: APIReference
+    note: Indexing is an asynchronous task created over REST and polled for status. No WebSocket.
+actions:
+  asyncapiPath: asyncapi/twelvelabs-asyncapi.yml
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Under the scope that allows HTTP
+    streaming in AsyncAPI, an AsyncAPI 2.6 document was authored for the
+    analyze NDJSON stream, with HTTP+NDJSON transport documented explicitly
+    throughout the spec (server protocol, channel bindings,
+    info.x-transport-notes) so NDJSON is never misrepresented as SSE or
+    WebSocket.

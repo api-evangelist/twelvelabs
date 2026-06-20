@@ -1,0 +1,74 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: TwelveLabs
+providerId: twelvelabs
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- AI
+- Video Understanding
+- Multimodal
+- Search
+- Embeddings
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  TwelveLabs enforces per-account rate limits expressed as requests per minute
+  on the API endpoints, plus concurrency limits on long-running indexing and
+  embedding tasks (e.g. 25 concurrent indexing tasks on the Developer plan) and
+  per-index volume caps (up to 10,000 hours and 100,000 videos per index).
+  Free-plan accounts are additionally capped at 10 hours of indexing and 600
+  cumulative processing minutes with 90-day index retention. Enterprise limits
+  are custom and scale with monthly spend. Specific per-endpoint RPM values are
+  not reconciled in this artifact.
+notes: >-
+  Verify per-endpoint request-per-minute limits and concurrency caps in the
+  TwelveLabs dashboard and rate-limits documentation on reconciliation; values
+  change as accounts move between Free, Developer, and Enterprise plans.
+sources:
+- https://docs.twelvelabs.io
+- https://www.twelvelabs.io/pricing
+responseCodes:
+  throttled: 429
+limits:
+- name: Requests Per Minute (RPM)
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Per-endpoint RPM, varies by plan.
+- name: Concurrent Indexing Tasks
+  scope: account
+  metric: tasks
+  limit: 25 (Developer plan)
+  notes: Maximum simultaneous video indexing tasks; higher on Enterprise.
+- name: Duration Per Index
+  scope: index
+  metric: hours
+  limit: 10000 (Developer plan)
+  notes: Maximum total video duration per index.
+- name: Volume Per Index
+  scope: index
+  metric: videos
+  limit: 100000 (Developer plan)
+  notes: Maximum number of videos per index.
+- name: Free Plan Indexing Cap
+  scope: account
+  metric: hours
+  limit: 10 (Free plan)
+  notes: Free accounts limited to 10 hours of indexing and 600 cumulative processing minutes.
+- name: Free Plan Index Retention
+  scope: index
+  metric: days
+  limit: 90 (Free plan)
+  notes: Free-plan indexes are accessible for 90 days from creation.
+policies:
+- name: Tiered Limits
+  description: Limits raise as accounts move from Free to Developer (pay-as-you-go) and to Enterprise agreements with custom rate limits scaled to monthly spend.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter, honor Retry-After on 429 responses, and poll task status rather than busy-waiting.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

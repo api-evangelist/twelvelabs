@@ -1,0 +1,149 @@
+aid: twelvelabs
+url: https://raw.githubusercontent.com/api-evangelist/twelvelabs/refs/heads/main/apis.yml
+name: TwelveLabs
+kind: company
+description: TwelveLabs builds video-understanding foundation models (Marengo for
+  search and embeddings, Pegasus for analyzing video and generating text). The
+  TwelveLabs API lets developers upload and index video, run any-to-video semantic
+  search, generate text from video (titles, topics, hashtags, summaries, chapters,
+  highlights, and open-ended analysis), and create multimodal embeddings over a
+  REST interface authenticated with an x-api-key header.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- AI
+- Video Understanding
+- Multimodal
+- Search
+- Embeddings
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: twelvelabs:twelvelabs-indexes-api
+  name: TwelveLabs Indexes API
+  tags:
+  - Indexes
+  - Videos
+  - Catalog
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.twelvelabs.io/v1.3/api-reference/indexes/list
+  baseURL: https://api.twelvelabs.io/v1.3
+  properties:
+  - url: https://docs.twelvelabs.io/v1.3/docs/concepts/indexes
+    type: Documentation
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/indexes/list
+    type: APIReference
+  - url: openapi/twelvelabs-openapi.yml
+    type: OpenAPI
+  - url: collections/twelvelabs.postman_collection.json
+    type: PostmanCollection
+  description: Create, list, retrieve, update, and delete video indexes, and manage
+    the indexed videos within them. Each index is configured with the Marengo
+    and/or Pegasus models and the visual/audio modalities to enable.
+- aid: twelvelabs:twelvelabs-tasks-upload-api
+  name: TwelveLabs Tasks (Upload) API
+  tags:
+  - Tasks
+  - Upload
+  - Indexing
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.twelvelabs.io/v1.3/api-reference/upload-content/tasks/create
+  baseURL: https://api.twelvelabs.io/v1.3
+  properties:
+  - url: https://docs.twelvelabs.io/v1.3/docs/filtering-indexes-and-tasks
+    type: Documentation
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/upload-content/tasks/create
+    type: APIReference
+  - url: openapi/twelvelabs-openapi.yml
+    type: OpenAPI
+  - url: collections/twelvelabs.postman_collection.json
+    type: PostmanCollection
+  description: Upload video by file or public URL and index it into a target index.
+    Create, list, retrieve, and delete asynchronous video indexing tasks and poll
+    their status (validating, pending, indexing, ready, failed).
+- aid: twelvelabs:twelvelabs-search-api
+  name: TwelveLabs Search API
+  tags:
+  - Search
+  - Semantic Search
+  - Marengo
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.twelvelabs.io/v1.3/api-reference/any-to-video-search/make-search-request
+  baseURL: https://api.twelvelabs.io/v1.3
+  properties:
+  - url: https://docs.twelvelabs.io/v1.3/docs/guides/search
+    type: Documentation
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/any-to-video-search/make-search-request
+    type: APIReference
+  - url: openapi/twelvelabs-openapi.yml
+    type: OpenAPI
+  - url: collections/twelvelabs.postman_collection.json
+    type: PostmanCollection
+  description: Any-to-video semantic search across an index using text and/or media
+    (image) queries, powered by the Marengo model, with visual / audio /
+    transcription search options, clip or video grouping, and token-paginated
+    results.
+- aid: twelvelabs:twelvelabs-analyze-generate-api
+  name: TwelveLabs Analyze / Generate API
+  tags:
+  - Analyze
+  - Generate
+  - Pegasus
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.twelvelabs.io/v1.3/api-reference/analyze-videos/analyze
+  baseURL: https://api.twelvelabs.io/v1.3
+  properties:
+  - url: https://docs.twelvelabs.io/v1.3/docs/guides/generate-text-from-video/summaries-chapters-and-highlights
+    type: Documentation
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/analyze-videos/analyze
+    type: APIReference
+  - url: openapi/twelvelabs-openapi.yml
+    type: OpenAPI
+  - url: asyncapi/twelvelabs-asyncapi.yml
+    type: AsyncAPI
+  - url: collections/twelvelabs.postman_collection.json
+    type: PostmanCollection
+  description: Generate text from video with the Pegasus model - open-ended analysis
+    via the sync /analyze endpoint (with optional NDJSON streaming), async
+    analysis tasks for longer video, plus gist (titles, topics, hashtags) and
+    summarize (summaries, chapters, highlights) generation.
+- aid: twelvelabs:twelvelabs-embed-api
+  name: TwelveLabs Embed API
+  tags:
+  - Embeddings
+  - Multimodal
+  - Marengo
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.twelvelabs.io/v1.3/api-reference/create-embeddings-v2/create-embeddings
+  baseURL: https://api.twelvelabs.io/v1.3
+  properties:
+  - url: https://www.twelvelabs.io/blog/introducing-twelve-labs-embed-api-open-beta
+    type: Documentation
+  - url: https://docs.twelvelabs.io/v1.3/api-reference/create-embeddings-v2/create-embeddings
+    type: APIReference
+  - url: openapi/twelvelabs-openapi.yml
+    type: OpenAPI
+  - url: collections/twelvelabs.postman_collection.json
+    type: PostmanCollection
+  description: Create multimodal Marengo embeddings for text, image, audio, and
+    video in one shared vector space - synchronously for short inputs and via
+    asynchronous embedding tasks for longer audio and video, for use in search,
+    RAG, classification, and recommendation pipelines.
+common:
+- type: GitHubOrganization
+  url: https://github.com/twelvelabs-io
+- type: LinkedIn
+  url: https://www.linkedin.com/company/twelvelabs
+- type: Website
+  url: https://www.twelvelabs.io
+- type: Documentation
+  url: https://docs.twelvelabs.io
+- type: Plans
+  url: plans/twelvelabs-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/twelvelabs-rate-limits.yml
+- type: FinOps
+  url: finops/twelvelabs-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,182 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: TwelveLabs
+providerId: twelvelabs
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- AI
+- Video Understanding
+- Multimodal
+- Search
+- Embeddings
+- Plans
+description: >-
+  TwelveLabs offers a Free plan (up to 10 hours of indexing / 600 cumulative
+  minutes across indexing, analysis, and segmentation, with indexes limited to
+  90 days), a usage-based Developer plan billed per video minute for indexing
+  and analysis, per 1,000 queries for search, per 1,000 tokens for generated
+  output, and per-minute / per-1,000-request rates for embeddings, and an
+  Enterprise plan with committed-use contracts and custom rate limits.
+notes: >-
+  Representative rates as published on the TwelveLabs pricing page; verify the
+  current model rates and free-tier limits on the pricing page during
+  reconciliation. Marengo handles search and embeddings; Pegasus handles
+  analysis and text generation.
+sources:
+- https://www.twelvelabs.io/pricing
+- https://docs.twelvelabs.io
+plans:
+- id: twelvelabs-free
+  name: Free
+  type: free
+  description: >-
+    Free access to all APIs with up to 10 hours of indexing and 600 cumulative
+    minutes across indexing, analysis, and segmentation. Indexes are accessible
+    for 90 days from creation. No credit card required.
+  entries:
+  - label: Included Indexing / Processing
+    name: free_minutes
+    type: free
+    metric: minutes
+    limit: 600
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.00
+    userMultiplied: false
+  - label: Indexing Hours Cap
+    name: free_indexing_hours
+    type: free
+    metric: hours
+    limit: 10
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.00
+    userMultiplied: false
+  elements:
+  - name: Indexes
+  - name: Search
+  - name: Analyze / Generate
+  - name: Embed
+- id: twelvelabs-developer
+  name: Developer
+  type: usage
+  description: >-
+    Pay-as-you-go usage with unlimited video hours and index access. Up to
+    10,000 hours and 100,000 videos per index and 25 concurrent indexing tasks.
+  entries:
+  - label: Video Indexing (Marengo)
+    name: indexing_marengo
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.042 per minute
+    userMultiplied: false
+  - label: Search
+    name: search
+    type: usage
+    metric: queries
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000
+    price: $4 per 1,000 queries
+    userMultiplied: false
+  - label: Analyze - Input Video (Pegasus)
+    name: analyze_input_video
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.0292 per minute
+    userMultiplied: false
+  - label: Analyze - Output Text (Pegasus)
+    name: analyze_output_tokens
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000
+    price: $0.0075 per 1K tokens
+    userMultiplied: false
+  - label: Embed - Audio
+    name: embed_audio
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.0083 per minute
+    userMultiplied: false
+  - label: Embed - Images
+    name: embed_images
+    type: usage
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000
+    price: $0.10 per 1,000 requests
+    userMultiplied: false
+  - label: Embed - Text
+    name: embed_text
+    type: usage
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000
+    price: $0.07 per 1,000 requests
+    userMultiplied: false
+  - label: Embedding Infrastructure (Monthly)
+    name: embed_infrastructure
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.0015 per minute
+    userMultiplied: false
+  elements:
+  - name: Indexes
+  - name: Tasks / Upload
+  - name: Search
+  - name: Analyze / Generate
+  - name: Embed
+- id: twelvelabs-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Committed-use contracts with custom pricing, unlimited video hours and
+    index access, and custom rate limits scaled to monthly spend. Contact
+    TwelveLabs sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Custom Rate Limits
+  - name: Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

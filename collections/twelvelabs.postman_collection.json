@@ -1,0 +1,267 @@
+{
+  "info": {
+    "name": "TwelveLabs API",
+    "description": "REST API for the TwelveLabs video-understanding platform: indexes, tasks (upload/indexing), any-to-video search (Marengo), analyze/generate (Pegasus), and embeddings. Authenticated with an x-api-key header.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "x-api-key", "type": "string" },
+      { "key": "value", "value": "{{apiKey}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.twelvelabs.io/v1.3" },
+    { "key": "apiKey", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Indexes",
+      "item": [
+        {
+          "name": "List indexes",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/indexes", "host": ["{{baseUrl}}"], "path": ["indexes"] }
+          }
+        },
+        {
+          "name": "Create an index",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"index_name\": \"myIndex\",\n  \"models\": [\n    {\"model_name\": \"marengo3.0\", \"model_options\": [\"visual\", \"audio\"]},\n    {\"model_name\": \"pegasus1.2\", \"model_options\": [\"visual\", \"audio\"]}\n  ],\n  \"addons\": [\"thumbnail\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/indexes", "host": ["{{baseUrl}}"], "path": ["indexes"] }
+          }
+        },
+        {
+          "name": "Retrieve an index",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/indexes/:index_id", "host": ["{{baseUrl}}"], "path": ["indexes", ":index_id"] }
+          }
+        },
+        {
+          "name": "Update an index",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"index_name\": \"renamedIndex\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{baseUrl}}/indexes/:index_id", "host": ["{{baseUrl}}"], "path": ["indexes", ":index_id"] }
+          }
+        },
+        {
+          "name": "Delete an index",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/indexes/:index_id", "host": ["{{baseUrl}}"], "path": ["indexes", ":index_id"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Videos",
+      "item": [
+        {
+          "name": "List videos",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/indexes/:index_id/videos", "host": ["{{baseUrl}}"], "path": ["indexes", ":index_id", "videos"] }
+          }
+        },
+        {
+          "name": "Retrieve video information",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/indexes/:index_id/videos/:video_id", "host": ["{{baseUrl}}"], "path": ["indexes", ":index_id", "videos", ":video_id"] }
+          }
+        },
+        {
+          "name": "Update video information",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"video_title\": \"My Video\",\n  \"user_metadata\": {}\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{baseUrl}}/indexes/:index_id/videos/:video_id", "host": ["{{baseUrl}}"], "path": ["indexes", ":index_id", "videos", ":video_id"] }
+          }
+        },
+        {
+          "name": "Delete a video",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/indexes/:index_id/videos/:video_id", "host": ["{{baseUrl}}"], "path": ["indexes", ":index_id", "videos", ":video_id"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "List video indexing tasks",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/tasks", "host": ["{{baseUrl}}"], "path": ["tasks"] }
+          }
+        },
+        {
+          "name": "Create a video indexing task",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "index_id", "value": "", "type": "text" },
+                { "key": "video_url", "value": "https://example.com/video.mp4", "type": "text" },
+                { "key": "video_file", "src": "", "type": "file" },
+                { "key": "enable_video_stream", "value": "true", "type": "text" }
+              ]
+            },
+            "url": { "raw": "{{baseUrl}}/tasks", "host": ["{{baseUrl}}"], "path": ["tasks"] }
+          }
+        },
+        {
+          "name": "Retrieve a video indexing task",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/tasks/:task_id", "host": ["{{baseUrl}}"], "path": ["tasks", ":task_id"] }
+          }
+        },
+        {
+          "name": "Delete a video indexing task",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/tasks/:task_id", "host": ["{{baseUrl}}"], "path": ["tasks", ":task_id"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Make any-to-video search request",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "index_id", "value": "", "type": "text" },
+                { "key": "query_text", "value": "people talking", "type": "text" },
+                { "key": "search_options", "value": "visual", "type": "text" },
+                { "key": "search_options", "value": "audio", "type": "text" },
+                { "key": "group_by", "value": "clip", "type": "text" },
+                { "key": "page_limit", "value": "10", "type": "text" }
+              ]
+            },
+            "url": { "raw": "{{baseUrl}}/search", "host": ["{{baseUrl}}"], "path": ["search"] }
+          }
+        },
+        {
+          "name": "Retrieve a specific page of search results",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/search/:page_token", "host": ["{{baseUrl}}"], "path": ["search", ":page_token"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analyze",
+      "item": [
+        {
+          "name": "Sync analysis (open-ended)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_id\": \"<string>\",\n  \"prompt\": \"Summarize the key moments in this video.\",\n  \"temperature\": 0.2,\n  \"stream\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/analyze", "host": ["{{baseUrl}}"], "path": ["analyze"] }
+          }
+        },
+        {
+          "name": "Generate gist",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_id\": \"<string>\",\n  \"types\": [\"title\", \"topic\", \"hashtag\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/gist", "host": ["{{baseUrl}}"], "path": ["gist"] }
+          }
+        },
+        {
+          "name": "Summarize",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_id\": \"<string>\",\n  \"type\": \"summary\",\n  \"prompt\": \"\",\n  \"temperature\": 0.2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/summarize", "host": ["{{baseUrl}}"], "path": ["summarize"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Embed",
+      "item": [
+        {
+          "name": "Create sync embeddings",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "model_name", "value": "Marengo-retrieval-2.7", "type": "text" },
+                { "key": "text", "value": "a red car driving at night", "type": "text" }
+              ]
+            },
+            "url": { "raw": "{{baseUrl}}/embed", "host": ["{{baseUrl}}"], "path": ["embed"] }
+          }
+        },
+        {
+          "name": "Create an async embedding task",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "model_name", "value": "Marengo-retrieval-2.7", "type": "text" },
+                { "key": "video_url", "value": "https://example.com/video.mp4", "type": "text" }
+              ]
+            },
+            "url": { "raw": "{{baseUrl}}/embed/tasks", "host": ["{{baseUrl}}"], "path": ["embed", "tasks"] }
+          }
+        },
+        {
+          "name": "List async embedding tasks",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/embed/tasks", "host": ["{{baseUrl}}"], "path": ["embed", "tasks"] }
+          }
+        },
+        {
+          "name": "Retrieve embedding task",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/embed/tasks/:task_id", "host": ["{{baseUrl}}"], "path": ["embed", "tasks", ":task_id"] }
+          }
+        }
+      ]
+    }
+  ]
+}

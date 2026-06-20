@@ -1,0 +1,349 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TwelveLabs API",
+    "version": "1.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "x-api-key",
+        "value": "{{apiKey}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Indexes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List indexes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/indexes"
+          },
+          "docs": "Returns a list of the indexes in your account."
+        },
+        {
+          "info": {
+            "name": "Create an index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/indexes",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"index_name\": \"myIndex\",\n  \"models\": [\n    {\"model_name\": \"marengo3.0\", \"model_options\": [\"visual\", \"audio\"]},\n    {\"model_name\": \"pegasus1.2\", \"model_options\": [\"visual\", \"audio\"]}\n  ],\n  \"addons\": [\"thumbnail\"]\n}"
+            }
+          },
+          "docs": "Creates an index configured with Marengo and/or Pegasus models."
+        },
+        {
+          "info": {
+            "name": "Retrieve an index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/indexes/{index_id}"
+          },
+          "docs": "Retrieves details of a specific index."
+        },
+        {
+          "info": {
+            "name": "Update an index",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.twelvelabs.io/v1.3/indexes/{index_id}",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"index_name\": \"renamedIndex\"\n}"
+            }
+          },
+          "docs": "Updates the name of an index."
+        },
+        {
+          "info": {
+            "name": "Delete an index",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.twelvelabs.io/v1.3/indexes/{index_id}"
+          },
+          "docs": "Deletes an index."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Videos",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List videos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/indexes/{index_id}/videos"
+          },
+          "docs": "Lists videos indexed within an index."
+        },
+        {
+          "info": {
+            "name": "Retrieve video information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/indexes/{index_id}/videos/{video_id}"
+          },
+          "docs": "Retrieves information about a specific video."
+        },
+        {
+          "info": {
+            "name": "Update video information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.twelvelabs.io/v1.3/indexes/{index_id}/videos/{video_id}",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"video_title\": \"My Video\",\n  \"user_metadata\": {}\n}"
+            }
+          },
+          "docs": "Updates the title and metadata of a video."
+        },
+        {
+          "info": {
+            "name": "Delete a video",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.twelvelabs.io/v1.3/indexes/{index_id}/videos/{video_id}"
+          },
+          "docs": "Deletes a video from an index."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List video indexing tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/tasks"
+          },
+          "docs": "Lists video indexing tasks."
+        },
+        {
+          "info": {
+            "name": "Create a video indexing task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/tasks",
+            "body": {
+              "type": "formdata",
+              "data": "index_id=<string>&video_url=https://example.com/video.mp4"
+            }
+          },
+          "docs": "Uploads and indexes a video (multipart/form-data: index_id, video_file or video_url)."
+        },
+        {
+          "info": {
+            "name": "Retrieve a video indexing task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/tasks/{task_id}"
+          },
+          "docs": "Retrieves the status of an indexing task."
+        },
+        {
+          "info": {
+            "name": "Delete a video indexing task",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.twelvelabs.io/v1.3/tasks/{task_id}"
+          },
+          "docs": "Deletes a video indexing task."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Make any-to-video search request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/search",
+            "body": {
+              "type": "formdata",
+              "data": "index_id=<string>&query_text=people%20talking&search_options=visual&search_options=audio"
+            }
+          },
+          "docs": "Any-to-video semantic search (multipart/form-data: index_id, query_text and/or query_media_*, search_options)."
+        },
+        {
+          "info": {
+            "name": "Retrieve a specific page of search results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/search/{page_token}"
+          },
+          "docs": "Retrieves a subsequent page of search results using a page token."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Analyze",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sync analysis (open-ended)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/analyze",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"video_id\": \"<string>\",\n  \"prompt\": \"Summarize the key moments in this video.\",\n  \"temperature\": 0.2,\n  \"stream\": true\n}"
+            }
+          },
+          "docs": "Generates open-ended text from video with Pegasus. Streams NDJSON when stream=true."
+        },
+        {
+          "info": {
+            "name": "Generate gist",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/gist",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"video_id\": \"<string>\",\n  \"types\": [\"title\", \"topic\", \"hashtag\"]\n}"
+            }
+          },
+          "docs": "Generates titles, topics, and hashtags for a video."
+        },
+        {
+          "info": {
+            "name": "Summarize",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/summarize",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"video_id\": \"<string>\",\n  \"type\": \"summary\",\n  \"prompt\": \"\",\n  \"temperature\": 0.2\n}"
+            }
+          },
+          "docs": "Generates a summary, chapters, or highlights for a video."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Embed",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create sync embeddings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/embed",
+            "body": {
+              "type": "formdata",
+              "data": "model_name=Marengo-retrieval-2.7&text=a%20red%20car%20driving%20at%20night"
+            }
+          },
+          "docs": "Creates Marengo embeddings for text, image, audio, or short video (multipart/form-data)."
+        },
+        {
+          "info": {
+            "name": "Create an async embedding task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/embed/tasks",
+            "body": {
+              "type": "formdata",
+              "data": "model_name=Marengo-retrieval-2.7&video_url=https://example.com/video.mp4"
+            }
+          },
+          "docs": "Creates an asynchronous embedding task for longer audio/video."
+        },
+        {
+          "info": {
+            "name": "List async embedding tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/embed/tasks"
+          },
+          "docs": "Lists asynchronous embedding tasks."
+        },
+        {
+          "info": {
+            "name": "Retrieve embedding task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/embed/tasks/{task_id}"
+          },
+          "docs": "Retrieves the status and results of an embedding task."
+        }
+      ]
+    }
+  ]
+}

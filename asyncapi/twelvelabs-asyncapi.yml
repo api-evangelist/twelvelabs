@@ -1,0 +1,199 @@
+asyncapi: '2.6.0'
+id: 'urn:com:twelvelabs:v1.3:analyze:ndjson'
+info:
+  title: TwelveLabs Analyze Streaming (HTTP + NDJSON)
+  version: '1.0.0'
+  description: |
+    AsyncAPI 2.6 description of TwelveLabs' **analyze (text generation)
+    streaming** surface.
+
+    TwelveLabs does not publish a WebSocket API. The only asynchronous /
+    event-style transport documented for text generation at
+    https://docs.twelvelabs.io/v1.3/api-reference/analyze-videos/analyze is
+    **HTTP streaming delivered as newline-delimited JSON (NDJSON)** over the
+    same REST endpoint (`POST /analyze`) when the request body sets
+    `stream: true` (the default). Each newline-delimited JSON object is one
+    event with an `event_type` of `stream_start`, `text_generation`, or
+    `stream_end`. NDJSON is a one-way, server-to-client HTTP streaming channel;
+    it is **not** WebSocket and it is **not** the `text/event-stream`
+    Server-Sent Events framing.
+
+    This AsyncAPI document models only the streamed events emitted by
+    TwelveLabs' `/analyze` NDJSON response. The request body itself (video_id,
+    prompt, temperature, etc.) is modeled in the companion OpenAPI document at
+    `openapi/twelvelabs-openapi.yml`.
+
+    Search, indexing, and embedding results are returned either synchronously
+    or via polled task status and are therefore not modeled here.
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+    url: https://apievangelist.com
+  license:
+    name: API documentation - TwelveLabs Terms of Use
+    url: https://www.twelvelabs.io/terms-of-use
+  x-transport-notes:
+    transport: HTTP newline-delimited JSON (NDJSON)
+    protocol: https
+    direction: server-to-client (one-way)
+    mediaType: application/x-ndjson
+    triggeredBy: 'POST https://api.twelvelabs.io/v1.3/analyze with request body { "stream": true }'
+    terminator: 'event with "event_type": "stream_end"'
+    notWebSocket: true
+    notServerSentEvents: true
+    source: https://docs.twelvelabs.io/v1.3/api-reference/analyze-videos/analyze
+defaultContentType: application/x-ndjson
+servers:
+  twelvelabs:
+    url: api.twelvelabs.io/v1.3
+    protocol: https
+    description: |
+      TwelveLabs REST base. Analyze (text generation) streaming is delivered
+      as HTTP newline-delimited JSON over this base when `stream: true` is set
+      on the JSON request body. AsyncAPI 2.6 does not define a dedicated NDJSON
+      protocol identifier; `https` is used here and the NDJSON transport is
+      documented in `info.x-transport-notes` and on the channel.
+    security:
+      - apiKeyAuth: []
+channels:
+  /analyze:
+    description: |
+      Analyze NDJSON stream. The client opens this channel by issuing
+      `POST /analyze` with `Content-Type: application/json` and a JSON body
+      containing `stream: true` (the default). The server responds with
+      `Content-Type: application/x-ndjson` and emits a sequence of
+      newline-delimited JSON objects: a single `stream_start`, one or more
+      `text_generation` events each carrying a slice of generated text, and a
+      final `stream_end` event carrying the finish reason and usage metadata.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+      x-ndjson:
+        mediaType: application/x-ndjson
+        framing: newline-delimited
+        terminator: '{"event_type":"stream_end"}'
+    subscribe:
+      operationId: streamAnalyzeEvents
+      summary: Subscribe to streamed analyze events (NDJSON).
+      description: |
+        After `POST /analyze` is issued with `stream: true`, the server emits
+        an ordered sequence of newline-delimited JSON events. Each line is one
+        JSON object whose `event_type` is `stream_start`, `text_generation`, or
+        `stream_end`.
+      bindings:
+        http:
+          type: response
+          bindingVersion: '0.3.0'
+      message:
+        oneOf:
+          - $ref: '#/components/messages/StreamStart'
+          - $ref: '#/components/messages/TextGeneration'
+          - $ref: '#/components/messages/StreamEnd'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: httpApiKey
+      in: header
+      name: x-api-key
+      description: |
+        TwelveLabs API key. Set the `x-api-key: <TL_API_KEY>` header on the
+        `POST /analyze` request that opens the NDJSON stream.
+  messages:
+    StreamStart:
+      name: StreamStart
+      title: Stream start event
+      summary: First NDJSON event, signaling the beginning of the generation stream.
+      contentType: application/x-ndjson
+      payload:
+        $ref: '#/components/schemas/StreamStartEvent'
+      examples:
+        - name: start
+          summary: Stream start
+          payload:
+            event_type: stream_start
+            metadata:
+              generation_id: gen_abc123
+    TextGeneration:
+      name: TextGeneration
+      title: Text generation event
+      summary: Carries a slice of generated text. Many of these are emitted in order.
+      contentType: application/x-ndjson
+      payload:
+        $ref: '#/components/schemas/TextGenerationEvent'
+      examples:
+        - name: token
+          summary: Text slice
+          payload:
+            event_type: text_generation
+            text: 'The video opens with'
+    StreamEnd:
+      name: StreamEnd
+      title: Stream end event
+      summary: Final NDJSON event, carrying finish reason and usage statistics.
+      contentType: application/x-ndjson
+      payload:
+        $ref: '#/components/schemas/StreamEndEvent'
+      examples:
+        - name: end
+          summary: Stream end
+          payload:
+            event_type: stream_end
+            finish_reason: stop
+            metadata:
+              generation_id: gen_abc123
+              usage:
+                output_tokens: 256
+  schemas:
+    StreamStartEvent:
+      type: object
+      required:
+        - event_type
+      properties:
+        event_type:
+          type: string
+          enum:
+            - stream_start
+        metadata:
+          type: object
+          properties:
+            generation_id:
+              type: string
+    TextGenerationEvent:
+      type: object
+      required:
+        - event_type
+        - text
+      properties:
+        event_type:
+          type: string
+          enum:
+            - text_generation
+        text:
+          type: string
+          description: A slice of the generated text. Concatenate across events in order.
+    StreamEndEvent:
+      type: object
+      required:
+        - event_type
+      properties:
+        event_type:
+          type: string
+          enum:
+            - stream_end
+        finish_reason:
+          type: string
+          description: Reason generation stopped (e.g. stop, length).
+        metadata:
+          type: object
+          properties:
+            generation_id:
+              type: string
+            usage:
+              type: object
+              properties:
+                output_tokens:
+                  type: integer
+                input_tokens:
+                  type: integer

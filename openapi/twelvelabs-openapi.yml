@@ -1,0 +1,1086 @@
+openapi: 3.0.1
+info:
+  title: TwelveLabs API
+  description: >-
+    REST API for the TwelveLabs video-understanding platform. Upload and index
+    video, run any-to-video semantic search (Marengo), generate text from video
+    (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal
+    embeddings. All requests are authenticated with an `x-api-key` header.
+  termsOfService: https://www.twelvelabs.io/terms-of-use
+  contact:
+    name: TwelveLabs Support
+    url: https://docs.twelvelabs.io
+    email: support@twelvelabs.io
+  version: '1.3'
+servers:
+  - url: https://api.twelvelabs.io/v1.3
+security:
+  - apiKeyAuth: []
+tags:
+  - name: Indexes
+    description: Create and manage video indexes.
+  - name: Videos
+    description: Manage videos within an index.
+  - name: Tasks
+    description: Upload and index video via asynchronous indexing tasks.
+  - name: Search
+    description: Any-to-video semantic search powered by Marengo.
+  - name: Analyze
+    description: Generate text from video with Pegasus (analyze, gist, summarize).
+  - name: Embed
+    description: Create multimodal Marengo embeddings.
+paths:
+  /indexes:
+    get:
+      operationId: listIndexes
+      tags:
+        - Indexes
+      summary: List indexes
+      description: Returns a list of the indexes in your account, with pagination.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+          description: Page number to retrieve.
+        - name: page_limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+          description: Number of items per page.
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            enum: [created_at, updated_at]
+            default: created_at
+          description: Field to sort by.
+        - name: sort_option
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+          description: Sort direction.
+        - name: index_name
+          in: query
+          schema:
+            type: string
+          description: Filter by index name.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Index'
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+    post:
+      operationId: createIndex
+      tags:
+        - Indexes
+      summary: Create an index
+      description: >-
+        Creates an index configured with one or more video understanding
+        models (Marengo for search/embeddings, Pegasus for analysis) and the
+        modalities to enable.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIndexRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+  /indexes/{index_id}:
+    get:
+      operationId: retrieveIndex
+      tags:
+        - Indexes
+      summary: Retrieve an index
+      parameters:
+        - $ref: '#/components/parameters/IndexId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Index'
+    put:
+      operationId: updateIndex
+      tags:
+        - Indexes
+      summary: Update an index
+      description: Updates the name of the specified index.
+      parameters:
+        - $ref: '#/components/parameters/IndexId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - index_name
+              properties:
+                index_name:
+                  type: string
+      responses:
+        '200':
+          description: OK
+    delete:
+      operationId: deleteIndex
+      tags:
+        - Indexes
+      summary: Delete an index
+      parameters:
+        - $ref: '#/components/parameters/IndexId'
+      responses:
+        '204':
+          description: No Content
+  /indexes/{index_id}/videos:
+    get:
+      operationId: listVideos
+      tags:
+        - Videos
+      summary: List videos
+      description: Returns the videos indexed within the specified index.
+      parameters:
+        - $ref: '#/components/parameters/IndexId'
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            enum: [created_at, updated_at]
+            default: created_at
+        - name: sort_option
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Video'
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+  /indexes/{index_id}/videos/{video_id}:
+    get:
+      operationId: retrieveVideo
+      tags:
+        - Videos
+      summary: Retrieve video information
+      parameters:
+        - $ref: '#/components/parameters/IndexId'
+        - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+    put:
+      operationId: updateVideo
+      tags:
+        - Videos
+      summary: Update video information
+      description: Updates the title and user metadata of the specified video.
+      parameters:
+        - $ref: '#/components/parameters/IndexId'
+        - $ref: '#/components/parameters/VideoId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                video_title:
+                  type: string
+                user_metadata:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '200':
+          description: OK
+    delete:
+      operationId: deleteVideo
+      tags:
+        - Videos
+      summary: Delete a video
+      parameters:
+        - $ref: '#/components/parameters/IndexId'
+        - $ref: '#/components/parameters/VideoId'
+      responses:
+        '204':
+          description: No Content
+  /tasks:
+    get:
+      operationId: listTasks
+      tags:
+        - Tasks
+      summary: List video indexing tasks
+      parameters:
+        - name: index_id
+          in: query
+          schema:
+            type: string
+          description: Filter tasks by index.
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [validating, pending, queued, indexing, ready, failed]
+          description: Filter tasks by status.
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+    post:
+      operationId: createTask
+      tags:
+        - Tasks
+      summary: Create a video indexing task
+      description: >-
+        Uploads a video by local file or public URL and indexes it into the
+        target index. Returns a task whose status can be polled until it
+        becomes `ready`.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - index_id
+              properties:
+                index_id:
+                  type: string
+                  description: Unique identifier of the target index.
+                video_file:
+                  type: string
+                  format: binary
+                  description: The video file to upload (use this OR video_url).
+                video_url:
+                  type: string
+                  description: Publicly accessible URL of the video (use this OR video_file).
+                enable_video_stream:
+                  type: boolean
+                  default: true
+                  description: Whether the platform stores the video for streaming.
+                user_metadata:
+                  type: string
+                  description: JSON-encoded user metadata for categorization.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+  /tasks/{task_id}:
+    get:
+      operationId: retrieveTask
+      tags:
+        - Tasks
+      summary: Retrieve a video indexing task
+      description: Returns the status and details of a specific indexing task.
+      parameters:
+        - $ref: '#/components/parameters/TaskId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+    delete:
+      operationId: deleteTask
+      tags:
+        - Tasks
+      summary: Delete a video indexing task
+      parameters:
+        - $ref: '#/components/parameters/TaskId'
+      responses:
+        '204':
+          description: No Content
+  /search:
+    post:
+      operationId: createSearch
+      tags:
+        - Search
+      summary: Make any-to-video search request
+      description: >-
+        Searches an index using a text query and/or media (image) queries.
+        Powered by Marengo. Returns paginated clip or video matches with
+        relevance scores and timestamps.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - index_id
+                - search_options
+              properties:
+                index_id:
+                  type: string
+                  description: Unique identifier of the index to search.
+                search_options:
+                  type: array
+                  description: Sources of information the platform uses.
+                  items:
+                    type: string
+                    enum: [visual, audio]
+                query_text:
+                  type: string
+                  description: Natural-language query (up to 500 tokens).
+                query_media_type:
+                  type: string
+                  enum: [image]
+                  description: Type of media query.
+                query_media_url:
+                  type: string
+                  description: Publicly accessible URL of the query media.
+                query_media_file:
+                  type: string
+                  format: binary
+                  description: Local query media file.
+                group_by:
+                  type: string
+                  enum: [clip, video]
+                  default: clip
+                operator:
+                  type: string
+                  enum: [or, and]
+                  default: or
+                page_limit:
+                  type: integer
+                  default: 10
+                  maximum: 50
+                filter:
+                  type: string
+                  description: Stringified JSON filter over video metadata.
+                threshold:
+                  type: string
+                  enum: [high, medium, low, none]
+                  description: Minimum confidence level of returned results.
+                sort_option:
+                  type: string
+                  enum: [score, clip_count]
+                  default: score
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+  /search/{page_token}:
+    get:
+      operationId: retrieveSearchPage
+      tags:
+        - Search
+      summary: Retrieve a specific page of search results
+      description: >-
+        Retrieves a subsequent page of search results using the
+        `next_page_token` returned by a prior search request.
+      parameters:
+        - name: page_token
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Token identifying the page of results to retrieve.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+  /analyze:
+    post:
+      operationId: analyzeVideo
+      tags:
+        - Analyze
+      summary: Sync analysis (open-ended text generation)
+      description: >-
+        Generates open-ended text from a video with the Pegasus model based on
+        a prompt. Returns the result in a single response, or as an NDJSON
+        stream when `stream` is true (default).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyzeRequest'
+      responses:
+        '200':
+          description: OK. Single JSON response, or `application/x-ndjson` event stream when stream=true.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyzeResponse'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/AnalyzeStreamEvent'
+  /gist:
+    post:
+      operationId: generateGist
+      tags:
+        - Analyze
+      summary: Generate gist (titles, topics, hashtags)
+      description: >-
+        Generates titles, topics, and/or hashtags for an indexed video using
+        Pegasus, based on the requested gist types.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - video_id
+                - types
+              properties:
+                video_id:
+                  type: string
+                  description: Unique identifier of the video.
+                types:
+                  type: array
+                  description: The gist types to generate.
+                  items:
+                    type: string
+                    enum: [title, topic, hashtag]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  topics:
+                    type: array
+                    items:
+                      type: string
+                  hashtags:
+                    type: array
+                    items:
+                      type: string
+                  usage:
+                    $ref: '#/components/schemas/Usage'
+  /summarize:
+    post:
+      operationId: summarizeVideo
+      tags:
+        - Analyze
+      summary: Generate summaries, chapters, or highlights
+      description: >-
+        Generates a summary, chapters, or highlights for an indexed video using
+        Pegasus, optionally guided by a prompt.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - video_id
+                - type
+              properties:
+                video_id:
+                  type: string
+                  description: Unique identifier of the video.
+                type:
+                  type: string
+                  enum: [summary, chapter, highlight]
+                  description: The kind of text to generate.
+                prompt:
+                  type: string
+                  description: Optional context to guide generation (up to 2,000 tokens).
+                temperature:
+                  type: number
+                  default: 0.2
+                  minimum: 0
+                  maximum: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  summary:
+                    type: string
+                  chapters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chapter_number:
+                          type: integer
+                        start:
+                          type: number
+                        end:
+                          type: number
+                        chapter_title:
+                          type: string
+                        chapter_summary:
+                          type: string
+                  highlights:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        start:
+                          type: number
+                        end:
+                          type: number
+                        highlight:
+                          type: string
+                  usage:
+                    $ref: '#/components/schemas/Usage'
+  /embed:
+    post:
+      operationId: createEmbeddings
+      tags:
+        - Embed
+      summary: Create sync embeddings
+      description: >-
+        Creates Marengo embeddings for text, image, audio, or short video in a
+        single shared multimodal vector space. For longer audio/video, use the
+        asynchronous embedding task endpoints.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - model_name
+              properties:
+                model_name:
+                  type: string
+                  description: The Marengo embedding model, e.g. Marengo-retrieval-2.7.
+                text:
+                  type: string
+                  description: Text to embed.
+                image_url:
+                  type: string
+                image_file:
+                  type: string
+                  format: binary
+                audio_url:
+                  type: string
+                audio_file:
+                  type: string
+                  format: binary
+                video_url:
+                  type: string
+                  description: URL of a short (<10 min) video to embed.
+                video_file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingResponse'
+  /embed/tasks:
+    post:
+      operationId: createEmbeddingTask
+      tags:
+        - Embed
+      summary: Create an async embedding task
+      description: >-
+        Creates an asynchronous embedding task for longer audio and video (up
+        to several hours). Results are stored for seven days.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - model_name
+              properties:
+                model_name:
+                  type: string
+                video_url:
+                  type: string
+                video_file:
+                  type: string
+                  format: binary
+                video_embedding_scopes:
+                  type: array
+                  items:
+                    type: string
+                    enum: [clip, video]
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+    get:
+      operationId: listEmbeddingTasks
+      tags:
+        - Embed
+      summary: List async embedding tasks
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EmbeddingTask'
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+  /embed/tasks/{task_id}:
+    get:
+      operationId: retrieveEmbeddingTask
+      tags:
+        - Embed
+      summary: Retrieve embedding task status and results
+      parameters:
+        - $ref: '#/components/parameters/TaskId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingTask'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: TwelveLabs API key sent in the `x-api-key` request header.
+  parameters:
+    IndexId:
+      name: index_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the index.
+    VideoId:
+      name: video_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the video.
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the task.
+  schemas:
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
+    ModelConfig:
+      type: object
+      required:
+        - model_name
+        - model_options
+      properties:
+        model_name:
+          type: string
+          description: e.g. marengo3.0 or pegasus1.2.
+        model_options:
+          type: array
+          items:
+            type: string
+            enum: [visual, audio]
+    CreateIndexRequest:
+      type: object
+      required:
+        - index_name
+        - models
+      properties:
+        index_name:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelConfig'
+        addons:
+          type: array
+          items:
+            type: string
+            enum: [thumbnail]
+    Index:
+      type: object
+      properties:
+        _id:
+          type: string
+        index_name:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelConfig'
+        video_count:
+          type: integer
+        total_duration:
+          type: number
+        addons:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Video:
+      type: object
+      properties:
+        _id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        indexed_at:
+          type: string
+          format: date-time
+        system_metadata:
+          type: object
+          properties:
+            duration:
+              type: number
+            filename:
+              type: string
+            fps:
+              type: number
+            height:
+              type: integer
+            width:
+              type: integer
+            video_title:
+              type: string
+        user_metadata:
+          type: object
+          additionalProperties: true
+        hls:
+          type: object
+          properties:
+            video_url:
+              type: string
+            thumbnail_urls:
+              type: array
+              items:
+                type: string
+            status:
+              type: string
+    Task:
+      type: object
+      properties:
+        _id:
+          type: string
+        index_id:
+          type: string
+        video_id:
+          type: string
+        status:
+          type: string
+          enum: [validating, pending, queued, indexing, ready, failed]
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        estimated_time:
+          type: string
+          format: date-time
+        system_metadata:
+          type: object
+          properties:
+            duration:
+              type: number
+            filename:
+              type: string
+    SearchResults:
+      type: object
+      properties:
+        search_pool:
+          type: object
+          properties:
+            total_count:
+              type: integer
+            total_duration:
+              type: number
+            index_id:
+              type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchClip'
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+    SearchClip:
+      type: object
+      properties:
+        score:
+          type: number
+        start:
+          type: number
+        end:
+          type: number
+        video_id:
+          type: string
+        confidence:
+          type: string
+          enum: [high, medium, low]
+        thumbnail_url:
+          type: string
+        clips:
+          type: array
+          items:
+            type: object
+            properties:
+              score:
+                type: number
+              start:
+                type: number
+              end:
+                type: number
+              video_id:
+                type: string
+              confidence:
+                type: string
+    AnalyzeRequest:
+      type: object
+      required:
+        - video_id
+        - prompt
+      properties:
+        video_id:
+          type: string
+          description: Unique identifier of the video to analyze.
+        prompt:
+          type: string
+          description: The prompt guiding the analysis (up to 2,000 tokens).
+        temperature:
+          type: number
+          default: 0.2
+          minimum: 0
+          maximum: 1
+        stream:
+          type: boolean
+          default: true
+          description: When true, results are streamed as NDJSON events.
+        max_tokens:
+          type: integer
+          description: Maximum number of tokens in the generated text.
+        response_format:
+          type: object
+          description: Optional structured output format (json_schema).
+    AnalyzeResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        data:
+          type: string
+          description: The generated text.
+        finish_reason:
+          type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
+    AnalyzeStreamEvent:
+      type: object
+      description: One NDJSON event emitted while streaming an analyze response.
+      properties:
+        event_type:
+          type: string
+          enum: [stream_start, text_generation, stream_end]
+        text:
+          type: string
+          description: A slice of generated text (text_generation events).
+        finish_reason:
+          type: string
+        metadata:
+          type: object
+          properties:
+            generation_id:
+              type: string
+            usage:
+              $ref: '#/components/schemas/Usage'
+    EmbeddingResponse:
+      type: object
+      properties:
+        model_name:
+          type: string
+        text_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        image_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        audio_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        video_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+    EmbeddingSegments:
+      type: object
+      properties:
+        segments:
+          type: array
+          items:
+            type: object
+            properties:
+              float:
+                type: array
+                items:
+                  type: number
+              start_offset_sec:
+                type: number
+              end_offset_sec:
+                type: number
+              embedding_scope:
+                type: string
+                enum: [clip, video]
+    EmbeddingTask:
+      type: object
+      properties:
+        _id:
+          type: string
+        model_name:
+          type: string
+        status:
+          type: string
+          enum: [processing, ready, failed]
+        created_at:
+          type: string
+          format: date-time
+        video_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+    Usage:
+      type: object
+      properties:
+        output_tokens:
+          type: integer
+        input_tokens:
+          type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
