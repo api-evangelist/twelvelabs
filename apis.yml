@@ -130,6 +130,10 @@ apis:
     asynchronous embedding tasks for longer audio and video, for use in search,
     RAG, classification, and recommendation pipelines.
 common:
+- type: DomainSecurity
+  url: security/twelvelabs-domain-security.yml
+- type: Authentication
+  url: authentication/twelvelabs-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/twelvelabs-io
 - type: LinkedIn
@@ -147,3 +151,5 @@ common:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+- type: Blog
+  url: https://www.twelvelabs.io/blog
