@@ -130,6 +130,8 @@ apis:
     asynchronous embedding tasks for longer audio and video, for use in search,
     RAG, classification, and recommendation pipelines.
 common:
+- type: AgenticAccess
+  url: agentic-access/twelvelabs-agentic-access.yml
 - type: DomainSecurity
   url: security/twelvelabs-domain-security.yml
 - type: Authentication
