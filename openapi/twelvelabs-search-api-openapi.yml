@@ -1,0 +1,197 @@
+openapi: 3.0.1
+info:
+  title: TwelveLabs Analyze Search API
+  description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
+  termsOfService: https://www.twelvelabs.io/terms-of-use
+  contact:
+    name: TwelveLabs Support
+    url: https://docs.twelvelabs.io
+    email: support@twelvelabs.io
+  version: '1.3'
+servers:
+- url: https://api.twelvelabs.io/v1.3
+security:
+- apiKeyAuth: []
+tags:
+- name: Search
+  description: Any-to-video semantic search powered by Marengo.
+paths:
+  /search:
+    post:
+      operationId: createSearch
+      tags:
+      - Search
+      summary: Make any-to-video search request
+      description: Searches an index using a text query and/or media (image) queries. Powered by Marengo. Returns paginated clip or video matches with relevance scores and timestamps.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - index_id
+              - search_options
+              properties:
+                index_id:
+                  type: string
+                  description: Unique identifier of the index to search.
+                search_options:
+                  type: array
+                  description: Sources of information the platform uses.
+                  items:
+                    type: string
+                    enum:
+                    - visual
+                    - audio
+                query_text:
+                  type: string
+                  description: Natural-language query (up to 500 tokens).
+                query_media_type:
+                  type: string
+                  enum:
+                  - image
+                  description: Type of media query.
+                query_media_url:
+                  type: string
+                  description: Publicly accessible URL of the query media.
+                query_media_file:
+                  type: string
+                  format: binary
+                  description: Local query media file.
+                group_by:
+                  type: string
+                  enum:
+                  - clip
+                  - video
+                  default: clip
+                operator:
+                  type: string
+                  enum:
+                  - or
+                  - and
+                  default: or
+                page_limit:
+                  type: integer
+                  default: 10
+                  maximum: 50
+                filter:
+                  type: string
+                  description: Stringified JSON filter over video metadata.
+                threshold:
+                  type: string
+                  enum:
+                  - high
+                  - medium
+                  - low
+                  - none
+                  description: Minimum confidence level of returned results.
+                sort_option:
+                  type: string
+                  enum:
+                  - score
+                  - clip_count
+                  default: score
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+  /search/{page_token}:
+    get:
+      operationId: retrieveSearchPage
+      tags:
+      - Search
+      summary: Retrieve a specific page of search results
+      description: Retrieves a subsequent page of search results using the `next_page_token` returned by a prior search request.
+      parameters:
+      - name: page_token
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Token identifying the page of results to retrieve.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+components:
+  schemas:
+    SearchClip:
+      type: object
+      properties:
+        score:
+          type: number
+        start:
+          type: number
+        end:
+          type: number
+        video_id:
+          type: string
+        confidence:
+          type: string
+          enum:
+          - high
+          - medium
+          - low
+        thumbnail_url:
+          type: string
+        clips:
+          type: array
+          items:
+            type: object
+            properties:
+              score:
+                type: number
+              start:
+                type: number
+              end:
+                type: number
+              video_id:
+                type: string
+              confidence:
+                type: string
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
+    SearchResults:
+      type: object
+      properties:
+        search_pool:
+          type: object
+          properties:
+            total_count:
+              type: integer
+            total_duration:
+              type: number
+            index_id:
+              type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchClip'
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: TwelveLabs API key sent in the `x-api-key` request header.

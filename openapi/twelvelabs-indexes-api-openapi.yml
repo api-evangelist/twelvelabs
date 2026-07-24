@@ -1,0 +1,235 @@
+openapi: 3.0.1
+info:
+  title: TwelveLabs Analyze Indexes API
+  description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
+  termsOfService: https://www.twelvelabs.io/terms-of-use
+  contact:
+    name: TwelveLabs Support
+    url: https://docs.twelvelabs.io
+    email: support@twelvelabs.io
+  version: '1.3'
+servers:
+- url: https://api.twelvelabs.io/v1.3
+security:
+- apiKeyAuth: []
+tags:
+- name: Indexes
+  description: Create and manage video indexes.
+paths:
+  /indexes:
+    get:
+      operationId: listIndexes
+      tags:
+      - Indexes
+      summary: List indexes
+      description: Returns a list of the indexes in your account, with pagination.
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number to retrieve.
+      - name: page_limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+          maximum: 50
+        description: Number of items per page.
+      - name: sort_by
+        in: query
+        schema:
+          type: string
+          enum:
+          - created_at
+          - updated_at
+          default: created_at
+        description: Field to sort by.
+      - name: sort_option
+        in: query
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Sort direction.
+      - name: index_name
+        in: query
+        schema:
+          type: string
+        description: Filter by index name.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Index'
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+    post:
+      operationId: createIndex
+      tags:
+      - Indexes
+      summary: Create an index
+      description: Creates an index configured with one or more video understanding models (Marengo for search/embeddings, Pegasus for analysis) and the modalities to enable.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIndexRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+  /indexes/{index_id}:
+    get:
+      operationId: retrieveIndex
+      tags:
+      - Indexes
+      summary: Retrieve an index
+      parameters:
+      - $ref: '#/components/parameters/IndexId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Index'
+    put:
+      operationId: updateIndex
+      tags:
+      - Indexes
+      summary: Update an index
+      description: Updates the name of the specified index.
+      parameters:
+      - $ref: '#/components/parameters/IndexId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - index_name
+              properties:
+                index_name:
+                  type: string
+      responses:
+        '200':
+          description: OK
+    delete:
+      operationId: deleteIndex
+      tags:
+      - Indexes
+      summary: Delete an index
+      parameters:
+      - $ref: '#/components/parameters/IndexId'
+      responses:
+        '204':
+          description: No Content
+components:
+  schemas:
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
+    CreateIndexRequest:
+      type: object
+      required:
+      - index_name
+      - models
+      properties:
+        index_name:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelConfig'
+        addons:
+          type: array
+          items:
+            type: string
+            enum:
+            - thumbnail
+    Index:
+      type: object
+      properties:
+        _id:
+          type: string
+        index_name:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelConfig'
+        video_count:
+          type: integer
+        total_duration:
+          type: number
+        addons:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ModelConfig:
+      type: object
+      required:
+      - model_name
+      - model_options
+      properties:
+        model_name:
+          type: string
+          description: e.g. marengo3.0 or pegasus1.2.
+        model_options:
+          type: array
+          items:
+            type: string
+            enum:
+            - visual
+            - audio
+  parameters:
+    IndexId:
+      name: index_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the index.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: TwelveLabs API key sent in the `x-api-key` request header.

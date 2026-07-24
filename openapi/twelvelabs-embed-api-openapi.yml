@@ -1,0 +1,232 @@
+openapi: 3.0.1
+info:
+  title: TwelveLabs Analyze Embed API
+  description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
+  termsOfService: https://www.twelvelabs.io/terms-of-use
+  contact:
+    name: TwelveLabs Support
+    url: https://docs.twelvelabs.io
+    email: support@twelvelabs.io
+  version: '1.3'
+servers:
+- url: https://api.twelvelabs.io/v1.3
+security:
+- apiKeyAuth: []
+tags:
+- name: Embed
+  description: Create multimodal Marengo embeddings.
+paths:
+  /embed:
+    post:
+      operationId: createEmbeddings
+      tags:
+      - Embed
+      summary: Create sync embeddings
+      description: Creates Marengo embeddings for text, image, audio, or short video in a single shared multimodal vector space. For longer audio/video, use the asynchronous embedding task endpoints.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - model_name
+              properties:
+                model_name:
+                  type: string
+                  description: The Marengo embedding model, e.g. Marengo-retrieval-2.7.
+                text:
+                  type: string
+                  description: Text to embed.
+                image_url:
+                  type: string
+                image_file:
+                  type: string
+                  format: binary
+                audio_url:
+                  type: string
+                audio_file:
+                  type: string
+                  format: binary
+                video_url:
+                  type: string
+                  description: URL of a short (<10 min) video to embed.
+                video_file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingResponse'
+  /embed/tasks:
+    post:
+      operationId: createEmbeddingTask
+      tags:
+      - Embed
+      summary: Create an async embedding task
+      description: Creates an asynchronous embedding task for longer audio and video (up to several hours). Results are stored for seven days.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - model_name
+              properties:
+                model_name:
+                  type: string
+                video_url:
+                  type: string
+                video_file:
+                  type: string
+                  format: binary
+                video_embedding_scopes:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - clip
+                    - video
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+    get:
+      operationId: listEmbeddingTasks
+      tags:
+      - Embed
+      summary: List async embedding tasks
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: page_limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+          maximum: 50
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EmbeddingTask'
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+  /embed/tasks/{task_id}:
+    get:
+      operationId: retrieveEmbeddingTask
+      tags:
+      - Embed
+      summary: Retrieve embedding task status and results
+      parameters:
+      - $ref: '#/components/parameters/TaskId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingTask'
+components:
+  schemas:
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
+    EmbeddingTask:
+      type: object
+      properties:
+        _id:
+          type: string
+        model_name:
+          type: string
+        status:
+          type: string
+          enum:
+          - processing
+          - ready
+          - failed
+        created_at:
+          type: string
+          format: date-time
+        video_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+    EmbeddingResponse:
+      type: object
+      properties:
+        model_name:
+          type: string
+        text_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        image_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        audio_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        video_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+    EmbeddingSegments:
+      type: object
+      properties:
+        segments:
+          type: array
+          items:
+            type: object
+            properties:
+              float:
+                type: array
+                items:
+                  type: number
+              start_offset_sec:
+                type: number
+              end_offset_sec:
+                type: number
+              embedding_scope:
+                type: string
+                enum:
+                - clip
+                - video
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the task.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: TwelveLabs API key sent in the `x-api-key` request header.

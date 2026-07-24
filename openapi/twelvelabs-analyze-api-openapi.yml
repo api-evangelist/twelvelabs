@@ -1,0 +1,243 @@
+openapi: 3.0.1
+info:
+  title: TwelveLabs Analyze API
+  description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
+  termsOfService: https://www.twelvelabs.io/terms-of-use
+  contact:
+    name: TwelveLabs Support
+    url: https://docs.twelvelabs.io
+    email: support@twelvelabs.io
+  version: '1.3'
+servers:
+- url: https://api.twelvelabs.io/v1.3
+security:
+- apiKeyAuth: []
+tags:
+- name: Analyze
+  description: Generate text from video with Pegasus (analyze, gist, summarize).
+paths:
+  /analyze:
+    post:
+      operationId: analyzeVideo
+      tags:
+      - Analyze
+      summary: Sync analysis (open-ended text generation)
+      description: Generates open-ended text from a video with the Pegasus model based on a prompt. Returns the result in a single response, or as an NDJSON stream when `stream` is true (default).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyzeRequest'
+      responses:
+        '200':
+          description: OK. Single JSON response, or `application/x-ndjson` event stream when stream=true.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyzeResponse'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/AnalyzeStreamEvent'
+  /gist:
+    post:
+      operationId: generateGist
+      tags:
+      - Analyze
+      summary: Generate gist (titles, topics, hashtags)
+      description: Generates titles, topics, and/or hashtags for an indexed video using Pegasus, based on the requested gist types.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - video_id
+              - types
+              properties:
+                video_id:
+                  type: string
+                  description: Unique identifier of the video.
+                types:
+                  type: array
+                  description: The gist types to generate.
+                  items:
+                    type: string
+                    enum:
+                    - title
+                    - topic
+                    - hashtag
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  topics:
+                    type: array
+                    items:
+                      type: string
+                  hashtags:
+                    type: array
+                    items:
+                      type: string
+                  usage:
+                    $ref: '#/components/schemas/Usage'
+  /summarize:
+    post:
+      operationId: summarizeVideo
+      tags:
+      - Analyze
+      summary: Generate summaries, chapters, or highlights
+      description: Generates a summary, chapters, or highlights for an indexed video using Pegasus, optionally guided by a prompt.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - video_id
+              - type
+              properties:
+                video_id:
+                  type: string
+                  description: Unique identifier of the video.
+                type:
+                  type: string
+                  enum:
+                  - summary
+                  - chapter
+                  - highlight
+                  description: The kind of text to generate.
+                prompt:
+                  type: string
+                  description: Optional context to guide generation (up to 2,000 tokens).
+                temperature:
+                  type: number
+                  default: 0.2
+                  minimum: 0
+                  maximum: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  summary:
+                    type: string
+                  chapters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chapter_number:
+                          type: integer
+                        start:
+                          type: number
+                        end:
+                          type: number
+                        chapter_title:
+                          type: string
+                        chapter_summary:
+                          type: string
+                  highlights:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        start:
+                          type: number
+                        end:
+                          type: number
+                        highlight:
+                          type: string
+                  usage:
+                    $ref: '#/components/schemas/Usage'
+components:
+  schemas:
+    AnalyzeStreamEvent:
+      type: object
+      description: One NDJSON event emitted while streaming an analyze response.
+      properties:
+        event_type:
+          type: string
+          enum:
+          - stream_start
+          - text_generation
+          - stream_end
+        text:
+          type: string
+          description: A slice of generated text (text_generation events).
+        finish_reason:
+          type: string
+        metadata:
+          type: object
+          properties:
+            generation_id:
+              type: string
+            usage:
+              $ref: '#/components/schemas/Usage'
+    AnalyzeResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        data:
+          type: string
+          description: The generated text.
+        finish_reason:
+          type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
+    Usage:
+      type: object
+      properties:
+        output_tokens:
+          type: integer
+        input_tokens:
+          type: integer
+    AnalyzeRequest:
+      type: object
+      required:
+      - video_id
+      - prompt
+      properties:
+        video_id:
+          type: string
+          description: Unique identifier of the video to analyze.
+        prompt:
+          type: string
+          description: The prompt guiding the analysis (up to 2,000 tokens).
+        temperature:
+          type: number
+          default: 0.2
+          minimum: 0
+          maximum: 1
+        stream:
+          type: boolean
+          default: true
+          description: When true, results are streamed as NDJSON events.
+        max_tokens:
+          type: integer
+          description: Maximum number of tokens in the generated text.
+        response_format:
+          type: object
+          description: Optional structured output format (json_schema).
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: TwelveLabs API key sent in the `x-api-key` request header.

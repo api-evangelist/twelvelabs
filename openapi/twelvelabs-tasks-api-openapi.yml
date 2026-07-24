@@ -1,0 +1,197 @@
+openapi: 3.0.1
+info:
+  title: TwelveLabs Analyze Tasks API
+  description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
+  termsOfService: https://www.twelvelabs.io/terms-of-use
+  contact:
+    name: TwelveLabs Support
+    url: https://docs.twelvelabs.io
+    email: support@twelvelabs.io
+  version: '1.3'
+servers:
+- url: https://api.twelvelabs.io/v1.3
+security:
+- apiKeyAuth: []
+tags:
+- name: Tasks
+  description: Upload and index video via asynchronous indexing tasks.
+paths:
+  /tasks:
+    get:
+      operationId: listTasks
+      tags:
+      - Tasks
+      summary: List video indexing tasks
+      parameters:
+      - name: index_id
+        in: query
+        schema:
+          type: string
+        description: Filter tasks by index.
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - validating
+          - pending
+          - queued
+          - indexing
+          - ready
+          - failed
+        description: Filter tasks by status.
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: page_limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+          maximum: 50
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+    post:
+      operationId: createTask
+      tags:
+      - Tasks
+      summary: Create a video indexing task
+      description: Uploads a video by local file or public URL and indexes it into the target index. Returns a task whose status can be polled until it becomes `ready`.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - index_id
+              properties:
+                index_id:
+                  type: string
+                  description: Unique identifier of the target index.
+                video_file:
+                  type: string
+                  format: binary
+                  description: The video file to upload (use this OR video_url).
+                video_url:
+                  type: string
+                  description: Publicly accessible URL of the video (use this OR video_file).
+                enable_video_stream:
+                  type: boolean
+                  default: true
+                  description: Whether the platform stores the video for streaming.
+                user_metadata:
+                  type: string
+                  description: JSON-encoded user metadata for categorization.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+  /tasks/{task_id}:
+    get:
+      operationId: retrieveTask
+      tags:
+      - Tasks
+      summary: Retrieve a video indexing task
+      description: Returns the status and details of a specific indexing task.
+      parameters:
+      - $ref: '#/components/parameters/TaskId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+    delete:
+      operationId: deleteTask
+      tags:
+      - Tasks
+      summary: Delete a video indexing task
+      parameters:
+      - $ref: '#/components/parameters/TaskId'
+      responses:
+        '204':
+          description: No Content
+components:
+  schemas:
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
+    Task:
+      type: object
+      properties:
+        _id:
+          type: string
+        index_id:
+          type: string
+        video_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - validating
+          - pending
+          - queued
+          - indexing
+          - ready
+          - failed
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        estimated_time:
+          type: string
+          format: date-time
+        system_metadata:
+          type: object
+          properties:
+            duration:
+              type: number
+            filename:
+              type: string
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the task.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: TwelveLabs API key sent in the `x-api-key` request header.
