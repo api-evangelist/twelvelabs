@@ -1,0 +1,24 @@
+{
+  "provider": "twelvelabs",
+  "sources": [
+    "twelvelabs-analyze-api-openapi.yml",
+    "twelvelabs-embed-api-openapi.yml",
+    "twelvelabs-indexes-api-openapi.yml",
+    "twelvelabs-search-api-openapi.yml",
+    "twelvelabs-tasks-api-openapi.yml",
+    "twelvelabs-videos-api-openapi.yml"
+  ],
+  "outputs": [
+    "twelvelabs-analyze-api-openapi.yml",
+    "twelvelabs-embed-api-openapi.yml",
+    "twelvelabs-indexes-api-openapi.yml",
+    "twelvelabs-search-api-openapi.yml",
+    "twelvelabs-tasks-api-openapi.yml",
+    "twelvelabs-videos-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
