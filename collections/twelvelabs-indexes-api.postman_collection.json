@@ -1,0 +1,563 @@
+{
+  "item": [
+    {
+      "id": "e63b0f0e-b0a8-4574-884c-ed374bba5fa7",
+      "name": "Indexes",
+      "description": {
+        "content": "Create and manage video indexes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "77685100-4958-4c79-89ee-e979dc1e1aab",
+          "name": "List indexes",
+          "request": {
+            "name": "List indexes",
+            "description": {
+              "content": "Returns a list of the indexes in your account, with pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "indexes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number to retrieve."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_limit",
+                  "value": "10",
+                  "description": "Number of items per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "created_at",
+                  "description": "Field to sort by."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_option",
+                  "value": "desc",
+                  "description": "Sort direction."
+                },
+                {
+                  "disabled": false,
+                  "key": "index_name",
+                  "value": "<string>",
+                  "description": "Filter by index name."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "739e4a74-b937-4937-975d-50151a26d26c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "sort_option",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "index_name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"_id\": \"string\",\n      \"index_name\": \"string\",\n      \"models\": [\n        {\n          \"model_name\": \"string\",\n          \"model_options\": [\n            \"audio\",\n            \"audio\"\n          ]\n        },\n        {\n          \"model_name\": \"string\",\n          \"model_options\": [\n            \"visual\",\n            \"visual\"\n          ]\n        }\n      ],\n      \"video_count\": 8101,\n      \"total_duration\": 471.0416615897628,\n      \"addons\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"1984-08-17T15:47:15.955Z\",\n      \"updated_at\": \"1993-06-23T20:50:38.913Z\"\n    },\n    {\n      \"_id\": \"string\",\n      \"index_name\": \"string\",\n      \"models\": [\n        {\n          \"model_name\": \"string\",\n          \"model_options\": [\n            \"audio\",\n            \"visual\"\n          ]\n        },\n        {\n          \"model_name\": \"string\",\n          \"model_options\": [\n            \"visual\",\n            \"audio\"\n          ]\n        }\n      ],\n      \"video_count\": 7334,\n      \"total_duration\": 2292.154210408306,\n      \"addons\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"1983-11-12T20:03:48.585Z\",\n      \"updated_at\": \"1959-10-15T19:28:18.199Z\"\n    }\n  ],\n  \"page_info\": {\n    \"limit_per_page\": 3416,\n    \"total_results\": 2386,\n    \"page\": 3568,\n    \"total_page\": 9663,\n    \"next_page_token\": \"string\",\n    \"prev_page_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da9d76b5-5fe2-4daa-9b66-753f8aacfb84",
+          "name": "Create an index",
+          "request": {
+            "name": "Create an index",
+            "description": {
+              "content": "Creates an index configured with one or more video understanding models (Marengo for search/embeddings, Pegasus for analysis) and the modalities to enable.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "indexes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"index_name\": \"<string>\",\n  \"models\": [\n    {\n      \"model_name\": \"<string>\",\n      \"model_options\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"model_name\": \"<string>\",\n      \"model_options\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"addons\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0a989d3e-7176-43dc-9fb2-e04954b196d1",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"index_name\": \"<string>\",\n  \"models\": [\n    {\n      \"model_name\": \"<string>\",\n      \"model_options\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"model_name\": \"<string>\",\n      \"model_options\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"addons\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "348e5aaf-bb04-406a-afc9-9a92d0dbe344",
+          "name": "Retrieve an index",
+          "request": {
+            "name": "Retrieve an index",
+            "description": {},
+            "url": {
+              "path": [
+                "indexes",
+                ":index_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "index_id",
+                  "description": "(Required) Unique identifier of the index."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e116fce-4526-449a-8ddd-20c7e6fa1896",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes",
+                    ":index_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "index_id",
+                      "description": "(Required) Unique identifier of the index."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"string\",\n  \"index_name\": \"string\",\n  \"models\": [\n    {\n      \"model_name\": \"<string>\",\n      \"model_options\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"model_name\": \"<string>\",\n      \"model_options\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"video_count\": 3793,\n  \"total_duration\": 7663.181889944234,\n  \"addons\": [\n    \"string\",\n    \"string\"\n  ],\n  \"created_at\": \"2018-02-04T08:54:26.893Z\",\n  \"updated_at\": \"1969-06-18T04:13:09.288Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0980f04-c9eb-4046-8eab-38f992117983",
+          "name": "Update an index",
+          "request": {
+            "name": "Update an index",
+            "description": {
+              "content": "Updates the name of the specified index.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "indexes",
+                ":index_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "index_id",
+                  "description": "(Required) Unique identifier of the index."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"index_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa924905-1833-4af5-99a5-1f5dd11aa5cc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes",
+                    ":index_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "index_id",
+                      "description": "(Required) Unique identifier of the index."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"index_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c929d2f-0614-4f27-be54-3e5c567bbf1f",
+          "name": "Delete an index",
+          "request": {
+            "name": "Delete an index",
+            "description": {},
+            "url": {
+              "path": [
+                "indexes",
+                ":index_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "index_id",
+                  "description": "(Required) Unique identifier of the index."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e4ce0d66-f30e-4980-bb3e-6633ae6b376e",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes",
+                    ":index_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "index_id",
+                      "description": "(Required) Unique identifier of the index."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twelvelabs.io/v1.3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b1f1f261-1469-42f9-ad17-af9193148adb",
+    "name": "TwelveLabs Analyze Indexes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.\n\nContact Support:\n Name: TwelveLabs Support\n Email: support@twelvelabs.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,508 @@
+{
+  "item": [
+    {
+      "id": "08880d00-0d6f-4afe-a043-a9d6d98b411f",
+      "name": "Tasks",
+      "description": {
+        "content": "Upload and index video via asynchronous indexing tasks.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0a7440e3-3262-4575-9f8b-15f8878c9622",
+          "name": "List video indexing tasks",
+          "request": {
+            "name": "List video indexing tasks",
+            "description": {},
+            "url": {
+              "path": [
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index_id",
+                  "value": "<string>",
+                  "description": "Filter tasks by index."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter tasks by status."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_limit",
+                  "value": "10"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c93cd30a-2b72-4e3a-81d3-12165dcef1c6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"_id\": \"string\",\n      \"index_id\": \"string\",\n      \"video_id\": \"string\",\n      \"status\": \"ready\",\n      \"created_at\": \"1973-05-03T10:20:01.086Z\",\n      \"updated_at\": \"1953-08-17T07:59:12.559Z\",\n      \"estimated_time\": \"1986-08-17T22:11:26.134Z\",\n      \"system_metadata\": {\n        \"duration\": 6871.522028270585,\n        \"filename\": \"string\"\n      }\n    },\n    {\n      \"_id\": \"string\",\n      \"index_id\": \"string\",\n      \"video_id\": \"string\",\n      \"status\": \"failed\",\n      \"created_at\": \"2023-10-08T03:12:13.099Z\",\n      \"updated_at\": \"1951-09-18T01:21:47.496Z\",\n      \"estimated_time\": \"1985-05-26T02:32:28.021Z\",\n      \"system_metadata\": {\n        \"duration\": 4258.950356335236,\n        \"filename\": \"string\"\n      }\n    }\n  ],\n  \"page_info\": {\n    \"limit_per_page\": 6774,\n    \"total_results\": 4989,\n    \"page\": 4077,\n    \"total_page\": 1431,\n    \"next_page_token\": \"string\",\n    \"prev_page_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "182d9097-7889-4221-b815-2ab3b1c78173",
+          "name": "Create a video indexing task",
+          "request": {
+            "name": "Create a video indexing task",
+            "description": {
+              "content": "Uploads a video by local file or public URL and indexes it into the target index. Returns a task whose status can be polled until it becomes `ready`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "index_id",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Unique identifier of the target index."
+                },
+                {
+                  "key": "video_file",
+                  "type": "file",
+                  "description": "The video file to upload (use this OR video_url)."
+                },
+                {
+                  "key": "video_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Publicly accessible URL of the video (use this OR video_file)."
+                },
+                {
+                  "key": "enable_video_stream",
+                  "value": "true",
+                  "type": "text",
+                  "description": "Whether the platform stores the video for streaming."
+                },
+                {
+                  "key": "user_metadata",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "JSON-encoded user metadata for categorization."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "43d19ad0-9389-4cd9-9d11-ae8bfe56f0b5",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Unique identifier of the target index.",
+                        "type": "text/plain"
+                      },
+                      "key": "index_id",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The video file to upload (use this OR video_url).",
+                        "type": "text/plain"
+                      },
+                      "key": "video_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Publicly accessible URL of the video (use this OR video_file).",
+                        "type": "text/plain"
+                      },
+                      "key": "video_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether the platform stores the video for streaming.",
+                        "type": "text/plain"
+                      },
+                      "key": "enable_video_stream",
+                      "value": "true",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "JSON-encoded user metadata for categorization.",
+                        "type": "text/plain"
+                      },
+                      "key": "user_metadata",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"string\",\n  \"index_id\": \"string\",\n  \"video_id\": \"string\",\n  \"status\": \"ready\",\n  \"created_at\": \"2003-10-06T08:26:59.339Z\",\n  \"updated_at\": \"2018-12-21T09:27:29.617Z\",\n  \"estimated_time\": \"1984-03-07T14:11:50.673Z\",\n  \"system_metadata\": {\n    \"duration\": 8406.011461365792,\n    \"filename\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce242081-df7a-4768-b4c8-3e9e6f162db0",
+          "name": "Retrieve a video indexing task",
+          "request": {
+            "name": "Retrieve a video indexing task",
+            "description": {
+              "content": "Returns the status and details of a specific indexing task.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tasks",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) Unique identifier of the task."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "072e326a-797d-4590-b03e-36f298553d4a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) Unique identifier of the task."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"string\",\n  \"index_id\": \"string\",\n  \"video_id\": \"string\",\n  \"status\": \"ready\",\n  \"created_at\": \"2003-10-06T08:26:59.339Z\",\n  \"updated_at\": \"2018-12-21T09:27:29.617Z\",\n  \"estimated_time\": \"1984-03-07T14:11:50.673Z\",\n  \"system_metadata\": {\n    \"duration\": 8406.011461365792,\n    \"filename\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c205c1b6-b8cc-4f8c-b78d-2d58753017f6",
+          "name": "Delete a video indexing task",
+          "request": {
+            "name": "Delete a video indexing task",
+            "description": {},
+            "url": {
+              "path": [
+                "tasks",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) Unique identifier of the task."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2ca8588-636a-46a5-9ae5-9c3230c88e13",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) Unique identifier of the task."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twelvelabs.io/v1.3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4e5ef625-8824-467a-89bf-63ffbde7b738",
+    "name": "TwelveLabs Analyze Tasks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.\n\nContact Support:\n Name: TwelveLabs Support\n Email: support@twelvelabs.io",
+      "type": "text/plain"
+    }
+  }
+}

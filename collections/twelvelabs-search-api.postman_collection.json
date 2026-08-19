@@ -1,0 +1,415 @@
+{
+  "item": [
+    {
+      "id": "a2413bbb-5329-40df-ae11-7a4e013aa114",
+      "name": "Search",
+      "description": {
+        "content": "Any-to-video semantic search powered by Marengo.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f2071d9d-cb0a-4502-a21d-304c2ab42daf",
+          "name": "Make any-to-video search request",
+          "request": {
+            "name": "Make any-to-video search request",
+            "description": {
+              "content": "Searches an index using a text query and/or media (image) queries. Powered by Marengo. Returns paginated clip or video matches with relevance scores and timestamps.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "index_id",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Unique identifier of the index to search."
+                },
+                {
+                  "key": "search_options",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "type": "text",
+                  "description": "(Required) Sources of information the platform uses."
+                },
+                {
+                  "key": "query_text",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Natural-language query (up to 500 tokens)."
+                },
+                {
+                  "key": "query_media_type",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Type of media query. (This can only be one of image)"
+                },
+                {
+                  "key": "query_media_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Publicly accessible URL of the query media."
+                },
+                {
+                  "key": "query_media_file",
+                  "type": "file",
+                  "description": "Local query media file."
+                },
+                {
+                  "key": "group_by",
+                  "value": "clip",
+                  "type": "text",
+                  "description": " (This can only be one of clip,video)"
+                },
+                {
+                  "key": "operator",
+                  "value": "or",
+                  "type": "text",
+                  "description": " (This can only be one of or,and)"
+                },
+                {
+                  "key": "page_limit",
+                  "value": "10",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "filter",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Stringified JSON filter over video metadata."
+                },
+                {
+                  "key": "threshold",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Minimum confidence level of returned results. (This can only be one of high,medium,low,none)"
+                },
+                {
+                  "key": "sort_option",
+                  "value": "score",
+                  "type": "text",
+                  "description": " (This can only be one of score,clip_count)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2296496a-ed1f-4b5f-9650-d60810cb8d6e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Unique identifier of the index to search.",
+                        "type": "text/plain"
+                      },
+                      "key": "index_id",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Sources of information the platform uses.",
+                        "type": "text/plain"
+                      },
+                      "key": "search_options",
+                      "value": "[\"<string>\",\"<string>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Natural-language query (up to 500 tokens).",
+                        "type": "text/plain"
+                      },
+                      "key": "query_text",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Type of media query. (This can only be one of image)",
+                        "type": "text/plain"
+                      },
+                      "key": "query_media_type",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Publicly accessible URL of the query media.",
+                        "type": "text/plain"
+                      },
+                      "key": "query_media_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Local query media file.",
+                        "type": "text/plain"
+                      },
+                      "key": "query_media_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": " (This can only be one of clip,video)",
+                        "type": "text/plain"
+                      },
+                      "key": "group_by",
+                      "value": "clip",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": " (This can only be one of or,and)",
+                        "type": "text/plain"
+                      },
+                      "key": "operator",
+                      "value": "or",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "page_limit",
+                      "value": "10",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Stringified JSON filter over video metadata.",
+                        "type": "text/plain"
+                      },
+                      "key": "filter",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Minimum confidence level of returned results. (This can only be one of high,medium,low,none)",
+                        "type": "text/plain"
+                      },
+                      "key": "threshold",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": " (This can only be one of score,clip_count)",
+                        "type": "text/plain"
+                      },
+                      "key": "sort_option",
+                      "value": "score",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"search_pool\": {\n    \"total_count\": 6206,\n    \"total_duration\": 8971.36584460357,\n    \"index_id\": \"string\"\n  },\n  \"data\": [\n    {\n      \"score\": 5348.209763712125,\n      \"start\": 7045.655889373822,\n      \"end\": 503.75656959686376,\n      \"video_id\": \"string\",\n      \"confidence\": \"medium\",\n      \"thumbnail_url\": \"string\",\n      \"clips\": [\n        {\n          \"score\": 4388.251816156327,\n          \"start\": 4367.358637524075,\n          \"end\": 9770.99047849571,\n          \"video_id\": \"string\",\n          \"confidence\": \"string\"\n        },\n        {\n          \"score\": 5216.555802022569,\n          \"start\": 5680.8664616161905,\n          \"end\": 4598.836470239715,\n          \"video_id\": \"string\",\n          \"confidence\": \"string\"\n        }\n      ]\n    },\n    {\n      \"score\": 7367.106752352007,\n      \"start\": 20.267676027070358,\n      \"end\": 2906.3045556636903,\n      \"video_id\": \"string\",\n      \"confidence\": \"medium\",\n      \"thumbnail_url\": \"string\",\n      \"clips\": [\n        {\n          \"score\": 9842.124260318502,\n          \"start\": 2445.9401952304206,\n          \"end\": 1209.6201219653847,\n          \"video_id\": \"string\",\n          \"confidence\": \"string\"\n        },\n        {\n          \"score\": 7650.0964626225805,\n          \"start\": 6439.233141365106,\n          \"end\": 4902.735380387079,\n          \"video_id\": \"string\",\n          \"confidence\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"page_info\": {\n    \"limit_per_page\": 7588,\n    \"total_results\": 3611,\n    \"page\": 9251,\n    \"total_page\": 5185,\n    \"next_page_token\": \"string\",\n    \"prev_page_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e37de661-684f-4c33-80a4-fc34051bab7e",
+          "name": "Retrieve a specific page of search results",
+          "request": {
+            "name": "Retrieve a specific page of search results",
+            "description": {
+              "content": "Retrieves a subsequent page of search results using the `next_page_token` returned by a prior search request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                ":page_token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "page_token",
+                  "description": "(Required) Token identifying the page of results to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e39563e0-603c-4e0a-8860-eee67dba4cf8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    ":page_token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "page_token",
+                      "description": "(Required) Token identifying the page of results to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"search_pool\": {\n    \"total_count\": 3252,\n    \"total_duration\": 5135.682391600014,\n    \"index_id\": \"string\"\n  },\n  \"data\": [\n    {\n      \"score\": 4773.528237216481,\n      \"start\": 9527.390390751803,\n      \"end\": 4136.581881093832,\n      \"video_id\": \"string\",\n      \"confidence\": \"medium\",\n      \"thumbnail_url\": \"string\",\n      \"clips\": [\n        {\n          \"score\": 9443.376509553847,\n          \"start\": 869.8115492458159,\n          \"end\": 1780.319992658469,\n          \"video_id\": \"string\",\n          \"confidence\": \"string\"\n        },\n        {\n          \"score\": 3204.883603628518,\n          \"start\": 7428.12139443135,\n          \"end\": 2792.7760900149333,\n          \"video_id\": \"string\",\n          \"confidence\": \"string\"\n        }\n      ]\n    },\n    {\n      \"score\": 5077.770481646613,\n      \"start\": 4328.871971367328,\n      \"end\": 2519.725672306449,\n      \"video_id\": \"string\",\n      \"confidence\": \"high\",\n      \"thumbnail_url\": \"string\",\n      \"clips\": [\n        {\n          \"score\": 899.3866271693041,\n          \"start\": 3605.1867749455523,\n          \"end\": 2556.616747448037,\n          \"video_id\": \"string\",\n          \"confidence\": \"string\"\n        },\n        {\n          \"score\": 4494.329073987981,\n          \"start\": 5634.152215207645,\n          \"end\": 7097.074654504791,\n          \"video_id\": \"string\",\n          \"confidence\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"page_info\": {\n    \"limit_per_page\": 6525,\n    \"total_results\": 9773,\n    \"page\": 6869,\n    \"total_page\": 5079,\n    \"next_page_token\": \"string\",\n    \"prev_page_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twelvelabs.io/v1.3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b0b27ee0-0b5a-4457-95eb-bc30aad53772",
+    "name": "TwelveLabs Analyze Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.\n\nContact Support:\n Name: TwelveLabs Support\n Email: support@twelvelabs.io",
+      "type": "text/plain"
+    }
+  }
+}

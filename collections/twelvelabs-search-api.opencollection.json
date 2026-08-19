@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TwelveLabs Analyze Search API",
+    "version": "1.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Make any-to-video search request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/search",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "index_id",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "search_options",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "query_text",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "query_media_type",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "query_media_url",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "query_media_file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "group_by",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "operator",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "page_limit",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "filter",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "threshold",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "sort_option",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Searches an index using a text query and/or media (image) queries. Powered by Marengo. Returns paginated clip or video matches with relevance scores and timestamps."
+        },
+        {
+          "info": {
+            "name": "Retrieve a specific page of search results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/search/:page_token",
+            "params": [
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "path",
+                "description": "Token identifying the page of results to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a subsequent page of search results using the `next_page_token` returned by a prior search request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

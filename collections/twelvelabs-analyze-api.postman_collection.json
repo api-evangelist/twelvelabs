@@ -1,0 +1,346 @@
+{
+  "item": [
+    {
+      "id": "98c90ea6-36ae-4338-a470-7203b83b316b",
+      "name": "Analyze",
+      "description": {
+        "content": "Generate text from video with Pegasus (analyze, gist, summarize).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b3621bce-1c67-4271-874b-ec5c62235602",
+          "name": "Sync analysis (open-ended text generation)",
+          "request": {
+            "name": "Sync analysis (open-ended text generation)",
+            "description": {
+              "content": "Generates open-ended text from a video with the Pegasus model based on a prompt. Returns the result in a single response, or as an NDJSON stream when `stream` is true (default).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "analyze"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"temperature\": 0.2,\n  \"stream\": true,\n  \"max_tokens\": \"<integer>\",\n  \"response_format\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "750e443c-eff5-4ba8-be30-182c034a0b1d",
+              "name": "OK. Single JSON response, or `application/x-ndjson` event stream when stream=true.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analyze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"video_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"temperature\": 0.2,\n  \"stream\": true,\n  \"max_tokens\": \"<integer>\",\n  \"response_format\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"data\": \"string\",\n  \"finish_reason\": \"string\",\n  \"usage\": {\n    \"output_tokens\": 1347,\n    \"input_tokens\": 816\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e2bb5be-283a-4db5-8dd6-2e27045bd531",
+          "name": "Generate gist (titles, topics, hashtags)",
+          "request": {
+            "name": "Generate gist (titles, topics, hashtags)",
+            "description": {
+              "content": "Generates titles, topics, and/or hashtags for an indexed video using Pegasus, based on the requested gist types.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gist"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_id\": \"<string>\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a37d3397-ac34-4894-948c-85e4a5ca0795",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"video_id\": \"<string>\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"title\": \"string\",\n  \"topics\": [\n    \"string\",\n    \"string\"\n  ],\n  \"hashtags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"usage\": {\n    \"output_tokens\": 4608,\n    \"input_tokens\": 2014\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c99a5857-bbbb-4cdf-b173-dcdb903d8a15",
+          "name": "Generate summaries, chapters, or highlights",
+          "request": {
+            "name": "Generate summaries, chapters, or highlights",
+            "description": {
+              "content": "Generates a summary, chapters, or highlights for an indexed video using Pegasus, optionally guided by a prompt.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "summarize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_id\": \"<string>\",\n  \"type\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"temperature\": 0.2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "320c36ec-d39b-409b-a6de-c1eaa02cdd19",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summarize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"video_id\": \"<string>\",\n  \"type\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"temperature\": 0.2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"summary\": \"string\",\n  \"chapters\": [\n    {\n      \"chapter_number\": 7242,\n      \"start\": 3437.7406570740386,\n      \"end\": 9448.01596957446,\n      \"chapter_title\": \"string\",\n      \"chapter_summary\": \"string\"\n    },\n    {\n      \"chapter_number\": 8667,\n      \"start\": 7990.810802810962,\n      \"end\": 8824.695630273649,\n      \"chapter_title\": \"string\",\n      \"chapter_summary\": \"string\"\n    }\n  ],\n  \"highlights\": [\n    {\n      \"start\": 3869.8417123671256,\n      \"end\": 6086.558790016621,\n      \"highlight\": \"string\"\n    },\n    {\n      \"start\": 6765.45223037955,\n      \"end\": 3479.2658186115445,\n      \"highlight\": \"string\"\n    }\n  ],\n  \"usage\": {\n    \"output_tokens\": 5559,\n    \"input_tokens\": 9180\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twelvelabs.io/v1.3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d85dcee5-c2a3-494c-b840-710b38d58639",
+    "name": "TwelveLabs Analyze API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.\n\nContact Support:\n Name: TwelveLabs Support\n Email: support@twelvelabs.io",
+      "type": "text/plain"
+    }
+  }
+}

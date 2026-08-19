@@ -1,0 +1,524 @@
+{
+  "item": [
+    {
+      "id": "c3e97c9d-7118-416d-b0c8-2988006d1d24",
+      "name": "Videos",
+      "description": {
+        "content": "Manage videos within an index.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea4ee837-1ad3-4b28-bfd8-121261a14c4c",
+          "name": "List videos",
+          "request": {
+            "name": "List videos",
+            "description": {
+              "content": "Returns the videos indexed within the specified index.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "indexes",
+                ":index_id",
+                "videos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_limit",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "created_at"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_option",
+                  "value": "desc"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "index_id",
+                  "description": "(Required) Unique identifier of the index."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cdbd8ae2-e7f9-4f6e-af86-28ff6945fddf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes",
+                    ":index_id",
+                    "videos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "sort_option",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "index_id",
+                      "description": "(Required) Unique identifier of the index."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"_id\": \"string\",\n      \"created_at\": \"2022-11-14T19:31:59.322Z\",\n      \"updated_at\": \"1990-04-22T13:38:21.614Z\",\n      \"indexed_at\": \"1966-11-27T02:32:43.152Z\",\n      \"system_metadata\": {\n        \"duration\": 4350.66898494517,\n        \"filename\": \"string\",\n        \"fps\": 6466.857967047861,\n        \"height\": 8951,\n        \"width\": 720,\n        \"video_title\": \"string\"\n      },\n      \"user_metadata\": {\n        \"key_0\": 1178.6985603121957\n      },\n      \"hls\": {\n        \"video_url\": \"string\",\n        \"thumbnail_urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"status\": \"string\"\n      }\n    },\n    {\n      \"_id\": \"string\",\n      \"created_at\": \"1962-02-16T02:33:19.870Z\",\n      \"updated_at\": \"1964-05-15T04:47:10.104Z\",\n      \"indexed_at\": \"1985-08-19T15:24:42.832Z\",\n      \"system_metadata\": {\n        \"duration\": 5675.250188928046,\n        \"filename\": \"string\",\n        \"fps\": 1262.0818758777464,\n        \"height\": 1761,\n        \"width\": 6178,\n        \"video_title\": \"string\"\n      },\n      \"user_metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": false,\n        \"key_2\": \"string\"\n      },\n      \"hls\": {\n        \"video_url\": \"string\",\n        \"thumbnail_urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"status\": \"string\"\n      }\n    }\n  ],\n  \"page_info\": {\n    \"limit_per_page\": 154,\n    \"total_results\": 7751,\n    \"page\": 116,\n    \"total_page\": 9653,\n    \"next_page_token\": \"string\",\n    \"prev_page_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ba96f8b-cbb0-4621-bf1f-8cad74633e6d",
+          "name": "Retrieve video information",
+          "request": {
+            "name": "Retrieve video information",
+            "description": {},
+            "url": {
+              "path": [
+                "indexes",
+                ":index_id",
+                "videos",
+                ":video_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "index_id",
+                  "description": "(Required) Unique identifier of the index."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "video_id",
+                  "description": "(Required) Unique identifier of the video."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80bb8041-3515-4939-8026-b9d1ff0735b4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes",
+                    ":index_id",
+                    "videos",
+                    ":video_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "index_id",
+                      "description": "(Required) Unique identifier of the index."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "video_id",
+                      "description": "(Required) Unique identifier of the video."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"string\",\n  \"created_at\": \"1981-02-26T04:47:47.522Z\",\n  \"updated_at\": \"2009-06-02T15:48:31.460Z\",\n  \"indexed_at\": \"1968-01-30T07:36:38.007Z\",\n  \"system_metadata\": {\n    \"duration\": 9942.559792873526,\n    \"filename\": \"string\",\n    \"fps\": 4321.161231935767,\n    \"height\": 7698,\n    \"width\": 1466,\n    \"video_title\": \"string\"\n  },\n  \"user_metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"hls\": {\n    \"video_url\": \"string\",\n    \"thumbnail_urls\": [\n      \"string\",\n      \"string\"\n    ],\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "29bc0140-20f9-47b8-8fc6-a63cf87526c9",
+          "name": "Update video information",
+          "request": {
+            "name": "Update video information",
+            "description": {
+              "content": "Updates the title and user metadata of the specified video.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "indexes",
+                ":index_id",
+                "videos",
+                ":video_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "index_id",
+                  "description": "(Required) Unique identifier of the index."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "video_id",
+                  "description": "(Required) Unique identifier of the video."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_title\": \"<string>\",\n  \"user_metadata\": {\n    \"key_0\": 6295\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f039d347-0bbf-4cb7-affb-0b3f7a069afd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes",
+                    ":index_id",
+                    "videos",
+                    ":video_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "index_id",
+                      "description": "(Required) Unique identifier of the index."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "video_id",
+                      "description": "(Required) Unique identifier of the video."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"video_title\": \"<string>\",\n  \"user_metadata\": {\n    \"key_0\": 6248\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6dc0c53c-872c-44bd-972f-b8c111f54c4c",
+          "name": "Delete a video",
+          "request": {
+            "name": "Delete a video",
+            "description": {},
+            "url": {
+              "path": [
+                "indexes",
+                ":index_id",
+                "videos",
+                ":video_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "index_id",
+                  "description": "(Required) Unique identifier of the index."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "video_id",
+                  "description": "(Required) Unique identifier of the video."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e94a1cd-7a65-42c7-80a4-524f70343bfb",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "indexes",
+                    ":index_id",
+                    "videos",
+                    ":video_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "index_id",
+                      "description": "(Required) Unique identifier of the index."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "video_id",
+                      "description": "(Required) Unique identifier of the video."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twelvelabs.io/v1.3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4f7db469-c025-44fb-a389-750ae25b5d55",
+    "name": "TwelveLabs Analyze Videos API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.\n\nContact Support:\n Name: TwelveLabs Support\n Email: support@twelvelabs.io",
+      "type": "text/plain"
+    }
+  }
+}

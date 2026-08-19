@@ -1,0 +1,601 @@
+{
+  "item": [
+    {
+      "id": "92bc1d4a-9bbe-4b8f-9ab2-5dd6adf114b3",
+      "name": "Embed",
+      "description": {
+        "content": "Create multimodal Marengo embeddings.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9b87c09c-4c7a-4f4f-8879-9712cfe1de7d",
+          "name": "Create sync embeddings",
+          "request": {
+            "name": "Create sync embeddings",
+            "description": {
+              "content": "Creates Marengo embeddings for text, image, audio, or short video in a single shared multimodal vector space. For longer audio/video, use the asynchronous embedding task endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "embed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "model_name",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The Marengo embedding model, e.g. Marengo-retrieval-2.7."
+                },
+                {
+                  "key": "text",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Text to embed."
+                },
+                {
+                  "key": "image_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "image_file",
+                  "type": "file",
+                  "description": ""
+                },
+                {
+                  "key": "audio_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "audio_file",
+                  "type": "file",
+                  "description": ""
+                },
+                {
+                  "key": "video_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "URL of a short (<10 min) video to embed."
+                },
+                {
+                  "key": "video_file",
+                  "type": "file",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ee06cc39-5ad2-457a-975e-a4b5fd447fe3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "embed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The Marengo embedding model, e.g. Marengo-retrieval-2.7.",
+                        "type": "text/plain"
+                      },
+                      "key": "model_name",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Text to embed.",
+                        "type": "text/plain"
+                      },
+                      "key": "text",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "image_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "image_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "audio_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "audio_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL of a short (<10 min) video to embed.",
+                        "type": "text/plain"
+                      },
+                      "key": "video_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "video_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_name\": \"string\",\n  \"text_embedding\": {\n    \"segments\": [\n      {\n        \"float\": [\n          8245.907432211363,\n          2226.9690076212\n        ],\n        \"start_offset_sec\": 533.0727111428956,\n        \"end_offset_sec\": 7224.309145264023,\n        \"embedding_scope\": \"video\"\n      },\n      {\n        \"float\": [\n          8471.549219082832,\n          8821.313091335316\n        ],\n        \"start_offset_sec\": 16.70902491225479,\n        \"end_offset_sec\": 394.0514344437196,\n        \"embedding_scope\": \"video\"\n      }\n    ]\n  },\n  \"image_embedding\": {\n    \"segments\": [\n      {\n        \"float\": [\n          2925.9187413116438,\n          6449.6235402672\n        ],\n        \"start_offset_sec\": 1484.3878984025905,\n        \"end_offset_sec\": 4034.9910834770853,\n        \"embedding_scope\": \"clip\"\n      },\n      {\n        \"float\": [\n          3650.825825872812,\n          4017.6997307578076\n        ],\n        \"start_offset_sec\": 4518.197308182189,\n        \"end_offset_sec\": 1249.2324044812597,\n        \"embedding_scope\": \"video\"\n      }\n    ]\n  },\n  \"audio_embedding\": {\n    \"segments\": [\n      {\n        \"float\": [\n          2807.3762950357027,\n          4879.131487146725\n        ],\n        \"start_offset_sec\": 8733.52458167555,\n        \"end_offset_sec\": 3892.49060335077,\n        \"embedding_scope\": \"video\"\n      },\n      {\n        \"float\": [\n          5326.628869393575,\n          9051.328368778577\n        ],\n        \"start_offset_sec\": 8092.478076017496,\n        \"end_offset_sec\": 9859.665299972272,\n        \"embedding_scope\": \"video\"\n      }\n    ]\n  },\n  \"video_embedding\": {\n    \"segments\": [\n      {\n        \"float\": [\n          7691.557225516504,\n          4654.837522476585\n        ],\n        \"start_offset_sec\": 6671.584010010823,\n        \"end_offset_sec\": 7790.275799971275,\n        \"embedding_scope\": \"video\"\n      },\n      {\n        \"float\": [\n          1094.1760539291113,\n          2081.672755365722\n        ],\n        \"start_offset_sec\": 7695.618629114807,\n        \"end_offset_sec\": 7785.040884504184,\n        \"embedding_scope\": \"video\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19aac552-4bee-46c3-9d9c-747070f2012b",
+          "name": "Create an async embedding task",
+          "request": {
+            "name": "Create an async embedding task",
+            "description": {
+              "content": "Creates an asynchronous embedding task for longer audio and video (up to several hours). Results are stored for seven days.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "embed",
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "model_name",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "video_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "video_file",
+                  "type": "file",
+                  "description": ""
+                },
+                {
+                  "key": "video_embedding_scopes",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9e5a483d-96b4-4991-8e3d-e7dc083d1169",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "embed",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "model_name",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "video_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "video_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "video_embedding_scopes",
+                      "value": "[\"<string>\",\"<string>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5d6b5dd-0ec4-4bec-bbe2-332cdc36e93c",
+          "name": "List async embedding tasks",
+          "request": {
+            "name": "List async embedding tasks",
+            "description": {},
+            "url": {
+              "path": [
+                "embed",
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_limit",
+                  "value": "10"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e75bf67-ac08-4b63-a76d-a3884de67688",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "embed",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"_id\": \"string\",\n      \"model_name\": \"string\",\n      \"status\": \"ready\",\n      \"created_at\": \"2004-01-28T11:25:09.744Z\",\n      \"video_embedding\": {\n        \"segments\": [\n          {\n            \"float\": [\n              5000.599085586436,\n              8097.790992232565\n            ],\n            \"start_offset_sec\": 7248.145479555459,\n            \"end_offset_sec\": 9879.573641442168,\n            \"embedding_scope\": \"clip\"\n          },\n          {\n            \"float\": [\n              3529.618445635555,\n              4233.5174691100565\n            ],\n            \"start_offset_sec\": 7528.696693347589,\n            \"end_offset_sec\": 3702.5711401223584,\n            \"embedding_scope\": \"clip\"\n          }\n        ]\n      }\n    },\n    {\n      \"_id\": \"string\",\n      \"model_name\": \"string\",\n      \"status\": \"ready\",\n      \"created_at\": \"1986-06-22T00:05:39.544Z\",\n      \"video_embedding\": {\n        \"segments\": [\n          {\n            \"float\": [\n              3191.888834463672,\n              691.2895008687115\n            ],\n            \"start_offset_sec\": 3268.0750894984335,\n            \"end_offset_sec\": 4516.410893137722,\n            \"embedding_scope\": \"video\"\n          },\n          {\n            \"float\": [\n              6535.231524871064,\n              5148.507090242587\n            ],\n            \"start_offset_sec\": 8305.946607233327,\n            \"end_offset_sec\": 6159.14886942543,\n            \"embedding_scope\": \"video\"\n          }\n        ]\n      }\n    }\n  ],\n  \"page_info\": {\n    \"limit_per_page\": 5724,\n    \"total_results\": 1134,\n    \"page\": 9629,\n    \"total_page\": 2096,\n    \"next_page_token\": \"string\",\n    \"prev_page_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47066c7a-7dbf-45da-93f4-299a339ee104",
+          "name": "Retrieve embedding task status and results",
+          "request": {
+            "name": "Retrieve embedding task status and results",
+            "description": {},
+            "url": {
+              "path": [
+                "embed",
+                "tasks",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) Unique identifier of the task."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4b577ff7-000b-4526-aef3-2e679644c62d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "embed",
+                    "tasks",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) Unique identifier of the task."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"string\",\n  \"model_name\": \"string\",\n  \"status\": \"failed\",\n  \"created_at\": \"1983-06-20T10:00:01.171Z\",\n  \"video_embedding\": {\n    \"segments\": [\n      {\n        \"float\": [\n          3305.373796591139,\n          9489.825068427974\n        ],\n        \"start_offset_sec\": 3768.892128435899,\n        \"end_offset_sec\": 1452.590572344754,\n        \"embedding_scope\": \"clip\"\n      },\n      {\n        \"float\": [\n          4754.936135070945,\n          8757.1532475286\n        ],\n        \"start_offset_sec\": 8937.596610149976,\n        \"end_offset_sec\": 1351.9482299205476,\n        \"embedding_scope\": \"clip\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twelvelabs.io/v1.3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5ba39cd7-7bf0-47d5-afb6-bd1f08cffaa0",
+    "name": "TwelveLabs Analyze Embed API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.\n\nContact Support:\n Name: TwelveLabs Support\n Email: support@twelvelabs.io",
+      "type": "text/plain"
+    }
+  }
+}

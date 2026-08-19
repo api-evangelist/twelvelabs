@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TwelveLabs Analyze API",
+    "version": "1.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Analyze",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sync analysis (open-ended text generation)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/analyze",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates open-ended text from a video with the Pegasus model based on a prompt. Returns the result in a single response, or as an NDJSON stream when `stream` is true (default)."
+        },
+        {
+          "info": {
+            "name": "Generate gist (titles, topics, hashtags)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/gist",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates titles, topics, and/or hashtags for an indexed video using Pegasus, based on the requested gist types."
+        },
+        {
+          "info": {
+            "name": "Generate summaries, chapters, or highlights",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/summarize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a summary, chapters, or highlights for an indexed video using Pegasus, optionally guided by a prompt."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

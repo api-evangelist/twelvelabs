@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TwelveLabs Analyze Tasks API",
+    "version": "1.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List video indexing tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/tasks",
+            "params": [
+              {
+                "name": "index_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter tasks by index."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter tasks by status."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List video indexing tasks"
+        },
+        {
+          "info": {
+            "name": "Create a video indexing task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.twelvelabs.io/v1.3/tasks",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "index_id",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "video_file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "video_url",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "enable_video_stream",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "user_metadata",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads a video by local file or public URL and indexes it into the target index. Returns a task whose status can be polled until it becomes `ready`."
+        },
+        {
+          "info": {
+            "name": "Retrieve a video indexing task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twelvelabs.io/v1.3/tasks/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the task."
+              }
+            ]
+          },
+          "docs": "Returns the status and details of a specific indexing task."
+        },
+        {
+          "info": {
+            "name": "Delete a video indexing task",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.twelvelabs.io/v1.3/tasks/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the task."
+              }
+            ]
+          },
+          "docs": "Delete a video indexing task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
