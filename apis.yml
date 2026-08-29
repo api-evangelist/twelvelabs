@@ -8,6 +8,18 @@ description: TwelveLabs builds video-understanding foundation models (Marengo fo
   search, generate text from video (titles, topics, hashtags, summaries, chapters,
   highlights, and open-ended analysis), and create multimodal embeddings over a
   REST interface authenticated with an x-api-key header.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
