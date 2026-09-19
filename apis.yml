@@ -127,6 +127,8 @@ apis:
   humanURL: https://docs.twelvelabs.io/v1.3/api-reference/indexes/list
   baseURL: https://api.twelvelabs.io/v1.3
   tags:
+  - Index
+  tags_raw:
   - Indexes
   properties:
   - type: OpenAPI
@@ -234,6 +236,8 @@ apis:
   humanURL: https://docs.twelvelabs.io/v1.3/api-reference/indexes/list
   baseURL: https://api.twelvelabs.io/v1.3
   tags:
+  - Video
+  tags_raw:
   - Videos
   properties:
   - type: OpenAPI
