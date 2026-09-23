@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: TwelveLabs Analyze Indexes API
+  title: TwelveLabs Indexes API
   description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
   termsOfService: https://www.twelvelabs.io/terms-of-use
   contact:
@@ -145,21 +145,22 @@ paths:
           description: No Content
 components:
   schemas:
-    PageInfo:
+    ModelConfig:
       type: object
+      required:
+      - model_name
+      - model_options
       properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
+        model_name:
           type: string
-        prev_page_token:
-          type: string
+          description: e.g. marengo3.0 or pegasus1.2.
+        model_options:
+          type: array
+          items:
+            type: string
+            enum:
+            - visual
+            - audio
     CreateIndexRequest:
       type: object
       required:
@@ -178,6 +179,21 @@ components:
             type: string
             enum:
             - thumbnail
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
     Index:
       type: object
       properties:
@@ -203,22 +219,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    ModelConfig:
-      type: object
-      required:
-      - model_name
-      - model_options
-      properties:
-        model_name:
-          type: string
-          description: e.g. marengo3.0 or pegasus1.2.
-        model_options:
-          type: array
-          items:
-            type: string
-            enum:
-            - visual
-            - audio
   parameters:
     IndexId:
       name: index_id

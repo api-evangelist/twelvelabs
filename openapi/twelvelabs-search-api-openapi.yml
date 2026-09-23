@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: TwelveLabs Analyze Search API
+  title: TwelveLabs Search API
   description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
   termsOfService: https://www.twelvelabs.io/terms-of-use
   contact:
@@ -122,6 +122,39 @@ paths:
                 $ref: '#/components/schemas/SearchResults'
 components:
   schemas:
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
+    SearchResults:
+      type: object
+      properties:
+        search_pool:
+          type: object
+          properties:
+            total_count:
+              type: integer
+            total_duration:
+              type: number
+            index_id:
+              type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchClip'
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
     SearchClip:
       type: object
       properties:
@@ -156,39 +189,6 @@ components:
                 type: string
               confidence:
                 type: string
-    PageInfo:
-      type: object
-      properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
-          type: string
-        prev_page_token:
-          type: string
-    SearchResults:
-      type: object
-      properties:
-        search_pool:
-          type: object
-          properties:
-            total_count:
-              type: integer
-            total_duration:
-              type: number
-            index_id:
-              type: string
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchClip'
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

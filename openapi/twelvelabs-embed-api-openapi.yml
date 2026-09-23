@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: TwelveLabs Analyze Embed API
+  title: TwelveLabs Embed API
   description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
   termsOfService: https://www.twelvelabs.io/terms-of-use
   contact:
@@ -149,21 +149,19 @@ paths:
                 $ref: '#/components/schemas/EmbeddingTask'
 components:
   schemas:
-    PageInfo:
+    EmbeddingResponse:
       type: object
       properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
+        model_name:
           type: string
-        prev_page_token:
-          type: string
+        text_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        image_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        audio_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        video_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
     EmbeddingTask:
       type: object
       properties:
@@ -180,19 +178,6 @@ components:
         created_at:
           type: string
           format: date-time
-        video_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-    EmbeddingResponse:
-      type: object
-      properties:
-        model_name:
-          type: string
-        text_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-        image_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-        audio_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
         video_embedding:
           $ref: '#/components/schemas/EmbeddingSegments'
     EmbeddingSegments:
@@ -216,6 +201,21 @@ components:
                 enum:
                 - clip
                 - video
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
   parameters:
     TaskId:
       name: task_id

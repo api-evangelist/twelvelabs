@@ -1,12 +1,7 @@
 {
   "provider": "twelvelabs",
   "sources": [
-    "twelvelabs-analyze-api-openapi.yml",
-    "twelvelabs-embed-api-openapi.yml",
-    "twelvelabs-indexes-api-openapi.yml",
-    "twelvelabs-search-api-openapi.yml",
-    "twelvelabs-tasks-api-openapi.yml",
-    "twelvelabs-videos-api-openapi.yml"
+    "_original/twelvelabs-openapi.yml"
   ],
   "outputs": [
     "twelvelabs-analyze-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "twelvelabs-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "twelvelabs-analyze-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twelvelabs-embed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twelvelabs-indexes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twelvelabs-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twelvelabs-tasks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twelvelabs-videos-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

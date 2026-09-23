@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: TwelveLabs Analyze Videos API
+  title: TwelveLabs Videos API
   description: REST API for the TwelveLabs video-understanding platform. Upload and index video, run any-to-video semantic search (Marengo), generate text from video (Pegasus) - open-ended analysis, gist, and summaries - and create multimodal embeddings. All requests are authenticated with an `x-api-key` header.
   termsOfService: https://www.twelvelabs.io/terms-of-use
   contact:
@@ -118,22 +118,22 @@ paths:
         '204':
           description: No Content
 components:
+  parameters:
+    VideoId:
+      name: video_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the video.
+    IndexId:
+      name: index_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the index.
   schemas:
-    PageInfo:
-      type: object
-      properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
-          type: string
-        prev_page_token:
-          type: string
     Video:
       type: object
       properties:
@@ -177,21 +177,21 @@ components:
                 type: string
             status:
               type: string
-  parameters:
-    IndexId:
-      name: index_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique identifier of the index.
-    VideoId:
-      name: video_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique identifier of the video.
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey
