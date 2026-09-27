@@ -122,39 +122,6 @@ paths:
                 $ref: '#/components/schemas/SearchResults'
 components:
   schemas:
-    PageInfo:
-      type: object
-      properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
-          type: string
-        prev_page_token:
-          type: string
-    SearchResults:
-      type: object
-      properties:
-        search_pool:
-          type: object
-          properties:
-            total_count:
-              type: integer
-            total_duration:
-              type: number
-            index_id:
-              type: string
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchClip'
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
     SearchClip:
       type: object
       properties:
@@ -189,6 +156,39 @@ components:
                 type: string
               confidence:
                 type: string
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
+    SearchResults:
+      type: object
+      properties:
+        search_pool:
+          type: object
+          properties:
+            total_count:
+              type: integer
+            total_duration:
+              type: number
+            index_id:
+              type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchClip'
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

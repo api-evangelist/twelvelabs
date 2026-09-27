@@ -145,55 +145,6 @@ paths:
           description: No Content
 components:
   schemas:
-    ModelConfig:
-      type: object
-      required:
-      - model_name
-      - model_options
-      properties:
-        model_name:
-          type: string
-          description: e.g. marengo3.0 or pegasus1.2.
-        model_options:
-          type: array
-          items:
-            type: string
-            enum:
-            - visual
-            - audio
-    CreateIndexRequest:
-      type: object
-      required:
-      - index_name
-      - models
-      properties:
-        index_name:
-          type: string
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelConfig'
-        addons:
-          type: array
-          items:
-            type: string
-            enum:
-            - thumbnail
-    PageInfo:
-      type: object
-      properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
-          type: string
-        prev_page_token:
-          type: string
     Index:
       type: object
       properties:
@@ -219,6 +170,55 @@ components:
         updated_at:
           type: string
           format: date-time
+    CreateIndexRequest:
+      type: object
+      required:
+      - index_name
+      - models
+      properties:
+        index_name:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelConfig'
+        addons:
+          type: array
+          items:
+            type: string
+            enum:
+            - thumbnail
+    ModelConfig:
+      type: object
+      required:
+      - model_name
+      - model_options
+      properties:
+        model_name:
+          type: string
+          description: e.g. marengo3.0 or pegasus1.2.
+        model_options:
+          type: array
+          items:
+            type: string
+            enum:
+            - visual
+            - audio
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
   parameters:
     IndexId:
       name: index_id

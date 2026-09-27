@@ -149,19 +149,6 @@ paths:
                 $ref: '#/components/schemas/EmbeddingTask'
 components:
   schemas:
-    EmbeddingResponse:
-      type: object
-      properties:
-        model_name:
-          type: string
-        text_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-        image_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-        audio_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-        video_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
     EmbeddingTask:
       type: object
       properties:
@@ -201,6 +188,19 @@ components:
                 enum:
                 - clip
                 - video
+    EmbeddingResponse:
+      type: object
+      properties:
+        model_name:
+          type: string
+        text_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        image_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        audio_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        video_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
     PageInfo:
       type: object
       properties:
