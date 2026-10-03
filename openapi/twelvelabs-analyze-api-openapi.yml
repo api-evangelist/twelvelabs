@@ -189,6 +189,13 @@ components:
               type: string
             usage:
               $ref: '#/components/schemas/Usage'
+    Usage:
+      type: object
+      properties:
+        output_tokens:
+          type: integer
+        input_tokens:
+          type: integer
     AnalyzeResponse:
       type: object
       properties:
@@ -201,13 +208,6 @@ components:
           type: string
         usage:
           $ref: '#/components/schemas/Usage'
-    Usage:
-      type: object
-      properties:
-        output_tokens:
-          type: integer
-        input_tokens:
-          type: integer
     AnalyzeRequest:
       type: object
       required:

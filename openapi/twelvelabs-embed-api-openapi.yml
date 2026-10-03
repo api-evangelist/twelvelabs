@@ -167,27 +167,6 @@ components:
           format: date-time
         video_embedding:
           $ref: '#/components/schemas/EmbeddingSegments'
-    EmbeddingSegments:
-      type: object
-      properties:
-        segments:
-          type: array
-          items:
-            type: object
-            properties:
-              float:
-                type: array
-                items:
-                  type: number
-              start_offset_sec:
-                type: number
-              end_offset_sec:
-                type: number
-              embedding_scope:
-                type: string
-                enum:
-                - clip
-                - video
     EmbeddingResponse:
       type: object
       properties:
@@ -216,6 +195,27 @@ components:
           type: string
         prev_page_token:
           type: string
+    EmbeddingSegments:
+      type: object
+      properties:
+        segments:
+          type: array
+          items:
+            type: object
+            properties:
+              float:
+                type: array
+                items:
+                  type: number
+              start_offset_sec:
+                type: number
+              end_offset_sec:
+                type: number
+              embedding_scope:
+                type: string
+                enum:
+                - clip
+                - video
   parameters:
     TaskId:
       name: task_id
