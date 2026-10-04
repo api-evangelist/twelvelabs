@@ -148,6 +148,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/EmbeddingTask'
 components:
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the task.
   schemas:
     EmbeddingTask:
       type: object
@@ -167,34 +175,6 @@ components:
           format: date-time
         video_embedding:
           $ref: '#/components/schemas/EmbeddingSegments'
-    EmbeddingResponse:
-      type: object
-      properties:
-        model_name:
-          type: string
-        text_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-        image_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-        audio_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-        video_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
-    PageInfo:
-      type: object
-      properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
-          type: string
-        prev_page_token:
-          type: string
     EmbeddingSegments:
       type: object
       properties:
@@ -216,14 +196,34 @@ components:
                 enum:
                 - clip
                 - video
-  parameters:
-    TaskId:
-      name: task_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique identifier of the task.
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
+    EmbeddingResponse:
+      type: object
+      properties:
+        model_name:
+          type: string
+        text_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        image_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        audio_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
+        video_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

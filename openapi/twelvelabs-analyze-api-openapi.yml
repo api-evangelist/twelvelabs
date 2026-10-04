@@ -167,6 +167,18 @@ paths:
                     $ref: '#/components/schemas/Usage'
 components:
   schemas:
+    AnalyzeResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        data:
+          type: string
+          description: The generated text.
+        finish_reason:
+          type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
     AnalyzeStreamEvent:
       type: object
       description: One NDJSON event emitted while streaming an analyze response.
@@ -196,18 +208,6 @@ components:
           type: integer
         input_tokens:
           type: integer
-    AnalyzeResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        data:
-          type: string
-          description: The generated text.
-        finish_reason:
-          type: string
-        usage:
-          $ref: '#/components/schemas/Usage'
     AnalyzeRequest:
       type: object
       required:
