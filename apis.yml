@@ -270,6 +270,8 @@ apis:
   - type: APIReference
     url: https://docs.twelvelabs.io/v1.3/api-reference/create-embeddings-v2/create-embeddings
 common:
+- type: Pricing
+  url: https://www.twelvelabs.io/pricing
 - type: AgenticAccess
   url: agentic-access/twelvelabs-agentic-access.yml
 - type: DomainSecurity
