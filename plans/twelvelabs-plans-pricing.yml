@@ -1,182 +1,218 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
-provider: TwelveLabs
-providerId: twelvelabs
-created: '2026-06-20'
-modified: '2026-06-20'
-reconciled: true
-tags:
-- AI
-- Video Understanding
-- Multimodal
-- Search
-- Embeddings
-- Plans
-description: >-
-  TwelveLabs offers a Free plan (up to 10 hours of indexing / 600 cumulative
-  minutes across indexing, analysis, and segmentation, with indexes limited to
-  90 days), a usage-based Developer plan billed per video minute for indexing
-  and analysis, per 1,000 queries for search, per 1,000 tokens for generated
-  output, and per-minute / per-1,000-request rates for embeddings, and an
-  Enterprise plan with committed-use contracts and custom rate limits.
-notes: >-
-  Representative rates as published on the TwelveLabs pricing page; verify the
-  current model rates and free-tier limits on the pricing page during
-  reconciliation. Marengo handles search and embeddings; Pegasus handles
-  analysis and text generation.
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://www.twelvelabs.io/pricing
 sources:
 - https://www.twelvelabs.io/pricing
-- https://docs.twelvelabs.io
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T112025
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: per-call
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-10-07'
+  evidence: Do you offer private or self-managed deployment options? Yes, contact sales to learn more.
+  managed_tier: Developer
+published: true
+note: Usage-based API pricing with Free, Developer (pay as you go) and Enterprise (custom) tiers. Private/self-managed
+  deployment mentioned only via contact sales.
+plan_count: 13
+currency: USD
 plans:
-- id: twelvelabs-free
-  name: Free
-  type: free
-  description: >-
-    Free access to all APIs with up to 10 hours of indexing and 600 cumulative
-    minutes across indexing, analysis, and segmentation. Indexes are accessible
-    for 90 days from creation. No credit card required.
-  entries:
-  - label: Included Indexing / Processing
-    name: free_minutes
-    type: free
-    metric: minutes
-    limit: 600
-    timeFrame: month
-    geo: global
-    unit: 1
-    price: $0.00
-    userMultiplied: false
-  - label: Indexing Hours Cap
-    name: free_indexing_hours
-    type: free
-    metric: hours
-    limit: 10
-    timeFrame: month
-    geo: global
-    unit: 1
-    price: $0.00
-    userMultiplied: false
-  elements:
-  - name: Indexes
-  - name: Search
-  - name: Analyze / Generate
-  - name: Embed
-- id: twelvelabs-developer
-  name: Developer
-  type: usage
-  description: >-
-    Pay-as-you-go usage with unlimited video hours and index access. Up to
-    10,000 hours and 100,000 videos per index and 25 concurrent indexing tasks.
-  entries:
-  - label: Video Indexing (Marengo)
-    name: indexing_marengo
-    type: usage
-    metric: minutes
-    limit: -1
-    timeFrame: month
-    geo: global
-    unit: 1
-    price: $0.042 per minute
-    userMultiplied: false
-  - label: Search
-    name: search
-    type: usage
-    metric: queries
-    limit: -1
-    timeFrame: month
-    geo: global
-    unit: 1000
-    price: $4 per 1,000 queries
-    userMultiplied: false
-  - label: Analyze - Input Video (Pegasus)
-    name: analyze_input_video
-    type: usage
-    metric: minutes
-    limit: -1
-    timeFrame: month
-    geo: global
-    unit: 1
-    price: $0.0292 per minute
-    userMultiplied: false
-  - label: Analyze - Output Text (Pegasus)
-    name: analyze_output_tokens
-    type: usage
-    metric: tokens
-    limit: -1
-    timeFrame: month
-    geo: global
-    unit: 1000
-    price: $0.0075 per 1K tokens
-    userMultiplied: false
-  - label: Embed - Audio
-    name: embed_audio
-    type: usage
-    metric: minutes
-    limit: -1
-    timeFrame: month
-    geo: global
-    unit: 1
-    price: $0.0083 per minute
-    userMultiplied: false
-  - label: Embed - Images
-    name: embed_images
-    type: usage
-    metric: requests
-    limit: -1
-    timeFrame: month
-    geo: global
-    unit: 1000
-    price: $0.10 per 1,000 requests
-    userMultiplied: false
-  - label: Embed - Text
-    name: embed_text
-    type: usage
-    metric: requests
-    limit: -1
-    timeFrame: month
-    geo: global
-    unit: 1000
-    price: $0.07 per 1,000 requests
-    userMultiplied: false
-  - label: Embedding Infrastructure (Monthly)
-    name: embed_infrastructure
-    type: usage
-    metric: minutes
-    limit: -1
-    timeFrame: month
-    geo: global
-    unit: 1
-    price: $0.0015 per minute
-    userMultiplied: false
-  elements:
-  - name: Indexes
-  - name: Tasks / Upload
-  - name: Search
-  - name: Analyze / Generate
-  - name: Embed
-- id: twelvelabs-enterprise
-  name: Enterprise
-  type: enterprise
-  description: >-
-    Committed-use contracts with custom pricing, unlimited video hours and
-    index access, and custom rate limits scaled to monthly spend. Contact
-    TwelveLabs sales.
-  entries:
-  - label: Enterprise Agreement
-    name: enterprise
-    type: flat
-    metric: contract
-    limit: -1
-    timeFrame: year
-    geo: global
-    unit: 1
-    price: contact sales
-    userMultiplied: false
-  elements:
-  - name: Custom Volume Pricing
-  - name: Custom Rate Limits
-  - name: Dedicated Support
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+- name: Free
+  price_text: Up to 10 hours of indexing
+  price: 10
+  period: none
+  unit: indexing hours
+  included_quota: 600 minutes video hours; index access 90 days since creation; 10 hours duration per
+    index; 100 videos per index; 5 concurrent indexing tasks
+- name: Developer – Video indexing (one time)
+  price_text: $2.50 / hour
+  price: 2.5
+  currency: USD
+  period: per-use
+  unit: hour
+- name: Developer – Embedding Infra (Monthly)
+  price_text: $0.09 / hour
+  price: 0.09
+  currency: USD
+  period: month
+  unit: hour
+- name: Developer – Search API usage
+  price_text: $4 / 1000 queries
+  price: 4
+  currency: USD
+  period: per-use
+  unit: 1000 queries
+- name: Developer – Embed API Video
+  price_text: $0.260 / 1M tokens
+  price: 0.26
+  currency: USD
+  period: per-use
+  unit: 1M tokens
+- name: Developer – Embed API Audio
+  price_text: $0.065 / 1M tokens
+  price: 0.065
+  currency: USD
+  period: per-use
+  unit: 1M tokens
+- name: Developer – Embed API Image
+  price_text: $0.080 / 1M tokens
+  price: 0.08
+  currency: USD
+  period: per-use
+  unit: 1M tokens
+- name: Developer – Embed API Text
+  price_text: $0.200 / 1M tokens
+  price: 0.2
+  currency: USD
+  period: per-use
+  unit: 1M tokens
+- name: Developer – Embed API Document
+  price_text: $0.162 / 1M tokens
+  price: 0.162
+  currency: USD
+  period: per-use
+  unit: 1M tokens
+- name: Developer – Analyze API input video
+  price_text: $1.75 / hour
+  price: 1.75
+  currency: USD
+  period: per-use
+  unit: hour
+- name: Developer – Analyze API input image
+  price_text: $3 / 1M tokens
+  price: 3
+  currency: USD
+  period: per-use
+  unit: 1M tokens
+- name: Developer – Analyze API output tokens
+  price_text: $7.5 / 1M tokens
+  price: 7.5
+  currency: USD
+  period: per-use
+  unit: 1M tokens
+- name: Enterprise
+  price_text: Talk to Sales
+  period: none
+  included_quota: Committed use contracts; unlimited video hours and index access; custom limits
+rate_limit_statements:
+- Concurrent indexing tasks 5 25 Custom
+- Duration per index 10 hours 10,000 hours Custom
+- Volume per index 100 videos 100,000 videos Custom
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  units:
+  - compute
+  - request
+  - token
+  plans:
+  - name: Free
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - none
+  - name: Developer – Video indexing (one time)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Developer – Embedding Infra (Monthly)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Developer – Search API usage
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - request
+    periods:
+    - other
+  - name: Developer – Embed API Video
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Developer – Embed API Audio
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Developer – Embed API Image
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Developer – Embed API Text
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Developer – Embed API Document
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Developer – Analyze API input video
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Developer – Analyze API input image
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Developer – Analyze API output tokens
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
