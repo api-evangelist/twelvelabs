@@ -36,7 +36,7 @@ edges:
     registered_name: io.twelvelabs/twelvelabs-mcp-server
     register_id: io.twelvelabs/twelvelabs-mcp-server
     detected_by: sweep-agent-tools.py
-    detected: '2026-10-14'
+    detected: '2026-10-15'
   mcp_registry:
     servers:
     - io.twelvelabs/twelvelabs-mcp-server
