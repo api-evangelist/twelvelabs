@@ -144,7 +144,48 @@ paths:
         '204':
           description: No Content
 components:
+  parameters:
+    IndexId:
+      name: index_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the index.
   schemas:
+    CreateIndexRequest:
+      type: object
+      required:
+      - index_name
+      - models
+      properties:
+        index_name:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelConfig'
+        addons:
+          type: array
+          items:
+            type: string
+            enum:
+            - thumbnail
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
     Index:
       type: object
       properties:
@@ -186,47 +227,6 @@ components:
             enum:
             - visual
             - audio
-    PageInfo:
-      type: object
-      properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
-          type: string
-        prev_page_token:
-          type: string
-    CreateIndexRequest:
-      type: object
-      required:
-      - index_name
-      - models
-      properties:
-        index_name:
-          type: string
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelConfig'
-        addons:
-          type: array
-          items:
-            type: string
-            enum:
-            - thumbnail
-  parameters:
-    IndexId:
-      name: index_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique identifier of the index.
   securitySchemes:
     apiKeyAuth:
       type: apiKey

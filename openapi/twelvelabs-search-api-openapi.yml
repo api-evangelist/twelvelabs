@@ -156,21 +156,6 @@ components:
                 type: string
               confidence:
                 type: string
-    PageInfo:
-      type: object
-      properties:
-        limit_per_page:
-          type: integer
-        total_results:
-          type: integer
-        page:
-          type: integer
-        total_page:
-          type: integer
-        next_page_token:
-          type: string
-        prev_page_token:
-          type: string
     SearchResults:
       type: object
       properties:
@@ -189,6 +174,21 @@ components:
             $ref: '#/components/schemas/SearchClip'
         page_info:
           $ref: '#/components/schemas/PageInfo'
+    PageInfo:
+      type: object
+      properties:
+        limit_per_page:
+          type: integer
+        total_results:
+          type: integer
+        page:
+          type: integer
+        total_page:
+          type: integer
+        next_page_token:
+          type: string
+        prev_page_token:
+          type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

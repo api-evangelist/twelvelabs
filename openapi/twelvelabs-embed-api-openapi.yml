@@ -157,24 +157,6 @@ components:
         type: string
       description: Unique identifier of the task.
   schemas:
-    EmbeddingTask:
-      type: object
-      properties:
-        _id:
-          type: string
-        model_name:
-          type: string
-        status:
-          type: string
-          enum:
-          - processing
-          - ready
-          - failed
-        created_at:
-          type: string
-          format: date-time
-        video_embedding:
-          $ref: '#/components/schemas/EmbeddingSegments'
     EmbeddingSegments:
       type: object
       properties:
@@ -211,6 +193,24 @@ components:
           type: string
         prev_page_token:
           type: string
+    EmbeddingTask:
+      type: object
+      properties:
+        _id:
+          type: string
+        model_name:
+          type: string
+        status:
+          type: string
+          enum:
+          - processing
+          - ready
+          - failed
+        created_at:
+          type: string
+          format: date-time
+        video_embedding:
+          $ref: '#/components/schemas/EmbeddingSegments'
     EmbeddingResponse:
       type: object
       properties:
