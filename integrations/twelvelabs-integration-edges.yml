@@ -3,6 +3,12 @@ method: searched
 checked:
 - https://aws.amazon.com/marketplace/
 - https://registry.modelcontextprotocol.io/v0/servers
+- https://a16z.com/portfolio/
+- https://www.battery.com/company/
+- https://www.battery.com/wp-admin/admin-ajax.php
+- https://www.indexventures.com/companies/
+- https://www.sequoiacap.com/our-companies/
+- https://www.sequoiacap.com/sitemap.xml
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -36,7 +42,7 @@ edges:
     registered_name: io.twelvelabs/twelvelabs-mcp-server
     register_id: io.twelvelabs/twelvelabs-mcp-server
     detected_by: sweep-agent-tools.py
-    detected: '2026-10-15'
+    detected: '2026-10-19'
   mcp_registry:
     servers:
     - io.twelvelabs/twelvelabs-mcp-server
@@ -53,3 +59,37 @@ edges:
   - namespace-domain
   detected_by: sweep-agent-tools.py
   first_seen: '2026-10-14'
+- partner_name: Index Ventures
+  partner: index-ventures
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.indexventures.com/companies/twelve-labs/
+  category: vc portfolio participation
+  contract_reference:
+    register: Index Ventures companies (indexventures.com/companies/)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: Twelve Labs
+    register_id: https://www.indexventures.com/companies/twelve-labs/
+    register_country: null
+    register_website: http://twelvelabs.io
+    matched_domain: twelvelabs.io
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+    sector: aiml
+  detected_by: sweep-vc-portfolios.py
+  first_seen: '2026-10-21'
+source:
+- https://a16z.com/portfolio/
+- https://www.battery.com/company/
+- https://www.battery.com/wp-admin/admin-ajax.php
+- https://www.sequoiacap.com/our-companies/
+- https://www.sequoiacap.com/sitemap.xml
+- https://www.indexventures.com/companies/
