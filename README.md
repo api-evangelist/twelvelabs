@@ -1,4 +1,4 @@
-# TwelveLabs (twelvelabs)
+# TwelveLabs
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,140 +66,144 @@
 
 TwelveLabs builds video-understanding foundation models (Marengo for search and embeddings, Pegasus for analyzing video and generating text). The TwelveLabs API lets developers upload and index video, run any-to-video semantic search, generate text from video (titles, topics, hashtags, summaries, chapters, highlights, and open-ended analysis), and create multimodal embeddings over a REST interface authenticated with an x-api-key header.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/twelvelabs/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/twelvelabs/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · Video Understanding · Multi-Modal · Search · Embeddings · Real-Time
 
-## Tags
+## TwelveLabs on APIs.io
 
-- AI
-- Video Understanding
-- Multimodal
-- Search
-- Embeddings
+Everything profiled for TwelveLabs is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/twelvelabs/](https://apis.io/providers/twelvelabs/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (6)
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+- [TwelveLabs Analyze API](https://apis.io/apis/twelvelabs/twelvelabs-analyze-api/) — Generate text from video with Pegasus (analyze, gist, summarize).
+- [TwelveLabs Embed API](https://apis.io/apis/twelvelabs/twelvelabs-embed-api/) — Create multimodal Marengo embeddings.
+- [TwelveLabs Indexes API](https://apis.io/apis/twelvelabs/twelvelabs-indexes-api/) — Create and manage video indexes.
+- [TwelveLabs Search API](https://apis.io/apis/twelvelabs/twelvelabs-search-api/) — Any-to-video semantic search powered by Marengo.
+- [TwelveLabs Tasks API](https://apis.io/apis/twelvelabs/twelvelabs-tasks-api/) — Upload and index video via asynchronous indexing tasks.
+- [TwelveLabs Videos API](https://apis.io/apis/twelvelabs/twelvelabs-videos-api/) — Manage videos within an index.
 
-## APIs
+### Published properties
 
-### TwelveLabs Indexes API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Create, list, retrieve, update, and delete video indexes, and manage the indexed videos within them. Each index is configured with the Marengo and/or Pegasus models and the visual/audio modalities to enable.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://docs.twelvelabs.io/v1.3/api-reference/indexes/list](https://docs.twelvelabs.io/v1.3/api-reference/indexes/list)
-- **Base URL:** `https://api.twelvelabs.io/v1.3`
+Event-driven and webhook contracts.
 
-#### Tags
+- [TwelveLabs Analyze Streaming (HTTP + NDJSON)](https://apis.io/asyncapis/twelvelabs/twelvelabs-asyncapi/)
 
-- Indexes
-- Videos
-- Catalog
+#### Event channels (1)
 
-#### Properties
+Individual events and webhooks the provider emits.
 
-- [Documentation](https://docs.twelvelabs.io/v1.3/docs/concepts/indexes)
-- [API Reference](https://docs.twelvelabs.io/v1.3/api-reference/indexes/list)
-- [OpenAPI](openapi/twelvelabs-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/twelvelabs.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/twelvelabs.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [/analyze](https://apis.io/channels/twelvelabs/analyze/)
 
-### TwelveLabs Tasks (Upload) API
+#### Agentic access (1)
 
-Upload video by file or public URL and index it into a target index. Create, list, retrieve, and delete asynchronous video indexing tasks and poll their status (validating, pending, indexing, ready, failed).
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://docs.twelvelabs.io/v1.3/api-reference/upload-content/tasks/create](https://docs.twelvelabs.io/v1.3/api-reference/upload-content/tasks/create)
-- **Base URL:** `https://api.twelvelabs.io/v1.3`
+- [Twelvelabs Agentic Access](https://apis.io/agentic-access/twelvelabs/twelvelabs-agentic-access/)
 
-#### Tags
+#### Collections (7)
 
-- Tasks
-- Upload
-- Indexing
+Postman and Open Collection request collections.
 
-#### Properties
+- [TwelveLabs API](https://apis.io/collections/twelvelabs/open-twelvelabs/)
+- [TwelveLabs Analyze API](https://apis.io/collections/twelvelabs/open-twelvelabs-analyze-api/)
+- [TwelveLabs Analyze Embed API](https://apis.io/collections/twelvelabs/open-twelvelabs-embed-api/)
+- [TwelveLabs Analyze Indexes API](https://apis.io/collections/twelvelabs/open-twelvelabs-indexes-api/)
+- [TwelveLabs Analyze Search API](https://apis.io/collections/twelvelabs/open-twelvelabs-search-api/)
+- [TwelveLabs Analyze Tasks API](https://apis.io/collections/twelvelabs/open-twelvelabs-tasks-api/)
+- [TwelveLabs Analyze Videos API](https://apis.io/collections/twelvelabs/open-twelvelabs-videos-api/)
 
-- [Documentation](https://docs.twelvelabs.io/v1.3/docs/filtering-indexes-and-tasks)
-- [API Reference](https://docs.twelvelabs.io/v1.3/api-reference/upload-content/tasks/create)
-- [OpenAPI](openapi/twelvelabs-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/twelvelabs.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/twelvelabs.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Governance rules (1)
 
-### TwelveLabs Search API
+Spectral rulesets for the provider's contracts.
 
-Any-to-video semantic search across an index using text and/or media (image) queries, powered by the Marengo model, with visual / audio / transcription search options, clip or video grouping, and token-paginated results.
+- [TwelveLabs — asyncapi rules](https://apis.io/rules/twelvelabs/twelvelabs-asyncapi-spectral-rules/)
 
-- **Human URL:** [https://docs.twelvelabs.io/v1.3/api-reference/any-to-video-search/make-search-request](https://docs.twelvelabs.io/v1.3/api-reference/any-to-video-search/make-search-request)
-- **Base URL:** `https://api.twelvelabs.io/v1.3`
+#### Security (2)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- Search
-- Semantic Search
-- Marengo
+- [Twelvelabs Authentication](https://apis.io/security/twelvelabs/twelvelabs-authentication/)
+- [Twelvelabs Domain Security](https://apis.io/security/twelvelabs/twelvelabs-domain-security/)
 
-#### Properties
+#### Plans and pricing (1)
 
-- [Documentation](https://docs.twelvelabs.io/v1.3/docs/guides/search)
-- [API Reference](https://docs.twelvelabs.io/v1.3/api-reference/any-to-video-search/make-search-request)
-- [OpenAPI](openapi/twelvelabs-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/twelvelabs.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/twelvelabs.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published plans, tiers and prices.
 
-### TwelveLabs Analyze / Generate API
+- [Twelvelabs Plans Pricing](https://apis.io/plans/twelvelabs/twelvelabs-plans-pricing/)
 
-Generate text from video with the Pegasus model - open-ended analysis via the sync /analyze endpoint (with optional NDJSON streaming), async analysis tasks for longer video, plus gist (titles, topics, hashtags) and summarize (summaries, chapters, highlights) generation.
+#### Rate limits (1)
 
-- **Human URL:** [https://docs.twelvelabs.io/v1.3/api-reference/analyze-videos/analyze](https://docs.twelvelabs.io/v1.3/api-reference/analyze-videos/analyze)
-- **Base URL:** `https://api.twelvelabs.io/v1.3`
+Published request limits.
 
-#### Tags
+- [Twelvelabs Rate Limits](https://apis.io/rate-limits/twelvelabs/twelvelabs-rate-limits/)
 
-- Analyze
-- Generate
-- Pegasus
+#### FinOps (1)
 
-#### Properties
+What the API costs to run, by operation.
 
-- [Documentation](https://docs.twelvelabs.io/v1.3/docs/guides/generate-text-from-video/summaries-chapters-and-highlights)
-- [API Reference](https://docs.twelvelabs.io/v1.3/api-reference/analyze-videos/analyze)
-- [OpenAPI](openapi/twelvelabs-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [AsyncAPI](asyncapi/twelvelabs-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/twelvelabs.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/twelvelabs.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Twelvelabs Finops](https://apis.io/finops/twelvelabs/twelvelabs-finops/)
 
-### TwelveLabs Embed API
+## Where to find this API
 
-Create multimodal Marengo embeddings for text, image, audio, and video in one shared vector space - synchronously for short inputs and via asynchronous embedding tasks for longer audio and video, for use in search, RAG, classification, and recommendation pipelines.
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- **Human URL:** [https://docs.twelvelabs.io/v1.3/api-reference/create-embeddings-v2/create-embeddings](https://docs.twelvelabs.io/v1.3/api-reference/create-embeddings-v2/create-embeddings)
-- **Base URL:** `https://api.twelvelabs.io/v1.3`
-
-#### Tags
-
-- Embeddings
-- Multimodal
-- Marengo
-
-#### Properties
-
-- [Documentation](https://www.twelvelabs.io/blog/introducing-twelve-labs-embed-api-open-beta)
-- [API Reference](https://docs.twelvelabs.io/v1.3/api-reference/create-embeddings-v2/create-embeddings)
-- [OpenAPI](openapi/twelvelabs-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/twelvelabs.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/twelvelabs.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/twelvelabs-io)
-- [LinkedIn](https://www.linkedin.com/company/twelvelabs)
 - [Website](https://www.twelvelabs.io)
 - [Documentation](https://docs.twelvelabs.io)
-- [Plans](plans/twelvelabs-plans-pricing.yml)
-- [Rate Limits](rate-limits/twelvelabs-rate-limits.yml)
-- [Fin Ops](finops/twelvelabs-finops.yml)
+- [Pricing](https://www.twelvelabs.io/pricing)
+- [GitHub](https://github.com/twelvelabs-io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 38.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 54.0 |
+| Contract governance | 11.4 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 29.8 |
+| Access clarity | 42.1 |
+
+**Agent readiness 20.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.9** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/twelvelabs/](https://apis.io/providers/twelvelabs/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for TwelveLabs: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/twelvelabs/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
